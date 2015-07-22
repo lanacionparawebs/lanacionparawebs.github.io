@@ -1,332 +1,35 @@
-/*********************************************************************
- *  #### Twitter Post Fetcher v13.0 ####
- *  Coded by Jason Mayes 2015. A present to all the developers out there.
- *  www.jasonmayes.com
- *  Please keep this disclaimer with my code if you use it. Thanks. :-)
- *  Got feedback or questions, ask here:
- *  http://www.jasonmayes.com/projects/twitterApi/
- *  Github: https://github.com/jasonmayes/Twitter-Post-Fetcher
- *  Updates will be posted to this site.
- *********************************************************************/
-(function(w, n) {
-    "function" === typeof define && define.amd ? define([], n) : "object" === typeof exports ? module.exports = n() : n()
-})(this, function() {
-    function w(a) {
-        return a.replace(/<b[^>]*>(.*?)<\/b>/gi, function(a, g) {
-            return g
-        }).replace(/class=".*?"|data-query-source=".*?"|dir=".*?"|rel=".*?"/gi, "")
-    }
-
-    function n(a) {
-        a = a.getElementsByTagName("a");
-        for (var c = a.length - 1; 0 <= c; c--) a[c].setAttribute("target", "_blank")
-    }
-
-    function m(a, c) {
-        for (var g = [], f = new RegExp("(^| )" + c + "( |$)"), h = a.getElementsByTagName("*"), b = 0, k = h.length; b <
-            k; b++) f.test(h[b].className) && g.push(h[b]);
-        return g
-    }
-    var B = "",
-        k = 20,
-        C = !0,
-        u = [],
-        x = !1,
-        v = !0,
-        q = !0,
-        y = null,
-        z = !0,
-        D = !0,
-        A = null,
-        E = !0,
-        F = !1,
-        r = !0,
-        G = !0,
-        H = {
-            fetch: function(a) {
-                void 0 === a.maxTweets && (a.maxTweets = 20);
-                void 0 === a.enableLinks && (a.enableLinks = !0);
-                void 0 === a.showUser && (a.showUser = !0);
-                void 0 === a.showTime && (a.showTime = !0);
-                void 0 === a.dateFunction && (a.dateFunction = "default");
-                void 0 === a.showRetweet && (a.showRetweet = !0);
-                void 0 === a.customCallback && (a.customCallback = null);
-                void 0 === a.showInteraction && (a.showInteraction = !0);
-                void 0 === a.showImages && (a.showImages = !1);
-                void 0 === a.linksInNewWindow && (a.linksInNewWindow = !0);
-                void 0 === a.showPermalinks && (a.showPermalinks = !0);
-                if (x) u.push(a);
-                else {
-                    x = !0;
-                    B = a.domId;
-                    k = a.maxTweets;
-                    C = a.enableLinks;
-                    q = a.showUser;
-                    v = a.showTime;
-                    D = a.showRetweet;
-                    y = a.dateFunction;
-                    A = a.customCallback;
-                    E = a.showInteraction;
-                    F = a.showImages;
-                    r = a.linksInNewWindow;
-                    G = a.showPermalinks;
-                    var c = document.createElement("script");
-                    c.type = "text/javascript";
-                    c.src = "//cdn.syndication.twimg.com/widgets/timelines/" + a.id + "?&lang=" + (a.lang ||
-                        "en") + "&callback=twitterFetcher.callback&suppress_response_codes=true&rnd=" + Math.random();
-                    document.getElementsByTagName("head")[0].appendChild(c)
-                }
-            },
-            callback: function(a) {
-                var c = document.createElement("div");
-                c.innerHTML = a.body;
-                "undefined" === typeof c.getElementsByClassName && (z = !1);
-                a = [];
-                var g = [],
-                    f = [],
-                    h = [],
-                    b = [],
-                    p = [],
-                    t = [],
-                    e = 0;
-                if (z)
-                    for (c = c.getElementsByClassName("tweet"); e < c.length;) {
-                        0 < c[e].getElementsByClassName("retweet-credit").length ? b.push(!0) : b.push(!1);
-                        if (!b[e] || b[e] && D) a.push(c[e].getElementsByClassName("e-entry-title")[0]),
-                            p.push(c[e].getAttribute("data-tweet-id")), g.push(c[e].getElementsByClassName("p-author")[0]), f.push(c[e].getElementsByClassName("dt-updated")[0]), t.push(c[e].getElementsByClassName("permalink")[0]), void 0 !== c[e].getElementsByClassName("inline-media")[0] ? h.push(c[e].getElementsByClassName("inline-media")[0]) : h.push(void 0);
-                        e++
-                    } else
-                        for (c = m(c, "tweet"); e < c.length;) a.push(m(c[e], "e-entry-title")[0]), p.push(c[e].getAttribute("data-tweet-id")), g.push(m(c[e], "p-author")[0]), f.push(m(c[e], "dt-updated")[0]),
-                            t.push(c[e].getElementsByClassName("permalink")[0]), void 0 !== m(c[e], "inline-media")[0] ? h.push(m(c[e], "inline-media")[0]) : h.push(void 0), 0 < m(c[e], "retweet-credit").length ? b.push(!0) : b.push(!1), e++;
-                a.length > k && (a.splice(k, a.length - k), g.splice(k, g.length - k), f.splice(k, f.length - k), b.splice(k, b.length - k), h.splice(k, h.length - k), t.splice(k, t.length - k));
-                c = [];
-                e = a.length;
-                for (b = 0; b < e;) {
-                    if ("string" !== typeof y) {
-                        var d = f[b].getAttribute("datetime"),
-                            l = new Date(f[b].getAttribute("datetime").replace(/-/g, "/").replace("T",
-                                " ").split("+")[0]),
-                            d = y(l, d);
-                        f[b].setAttribute("aria-label", d);
-                        if (a[b].innerText)
-                            if (z) f[b].innerText = d;
-                            else {
-                                var l = document.createElement("p"),
-                                    I = document.createTextNode(d);
-                                l.appendChild(I);
-                                l.setAttribute("aria-label", d);
-                                f[b] = l
-                            } else f[b].textContent = d
-                    }
-                    d = "";
-                    C ? (r && (n(a[b]), q && n(g[b])), q && (d += '<div class="user">' + w(g[b].innerHTML) + "</div>"), d += '<p class="tweet">' + w(a[b].innerHTML) + "</p>", v && (d = G ? d + ('<p class="timePosted"><a href="' + t[b] + '">' + f[b].getAttribute("aria-label") + "</a></p>") : d + ('<p class="timePosted">' +
-                        f[b].getAttribute("aria-label") + "</p>"))) : a[b].innerText ? (q && (d += '<p class="user">' + g[b].innerText + "</p>"), d += '<p class="tweet">' + a[b].innerText + "</p>", v && (d += '<p class="timePosted">' + f[b].innerText + "</p>")) : (q && (d += '<p class="user">' + g[b].textContent + "</p>"), d += '<p class="tweet">' + a[b].textContent + "</p>", v && (d += '<p class="timePosted">' + f[b].textContent + "</p>"));
-                    E && (d += '<p class="interact"><a href="https://twitter.com/intent/tweet?in_reply_to=' + p[b] + '" class="twitter_reply_icon"' + (r ? ' target="_blank">' :
-                        ">") + 'Reply</a><a href="https://twitter.com/intent/retweet?tweet_id=' + p[b] + '" class="twitter_retweet_icon"' + (r ? ' target="_blank">' : ">") + 'Retweet</a><a href="https://twitter.com/intent/favorite?tweet_id=' + p[b] + '" class="twitter_fav_icon"' + (r ? ' target="_blank">' : ">") + "Favorite</a></p>");
-                    F && void 0 !== h[b] && (l = h[b], void 0 !== l ? (l = l.innerHTML.match(/data-srcset="([A-z0-9%_\.-]+)/i)[0], l = decodeURIComponent(l).split('"')[1]) : l = void 0, d += '<div class="media"><img src="' + l + '" alt="Image from tweet" /></div>');
-                    c.push(d);
-                    b++
-                }
-                if (null === A) {
-                    a = c.length;
-                    g = 0;
-                    f = document.getElementById(B);
-                    for (h = "<ul>"; g < a;) h += "<li>" + c[g] + "</li>", g++;
-                    f.innerHTML = h + "</ul>"
-                } else A(c);
-                x = !1;
-                0 < u.length && (H.fetch(u[0]), u.splice(0, 1))
-            }
-        };
-    return window.twitterFetcher = H
-});
-
-
-/* jshint devel:true */
-$('#nav').affix({
-    offset: {
-        top: function() {
-            return ($('header').height())
-        }
-    }
-})
-
-$(document).ready(function(e) {
-    $('.search-panel .dropdown-menu').find('a').click(function(e) {
-        e.preventDefault();
-        var param = $(this).attr("href").replace("#", "");
-        var concept = $(this).text();
-        $('.search-panel span#search_concept').text(concept);
-        $('.input-group #search_param').val(param);
-    });
-});
-
-
-
-
-
-$(function() {
-
-    if (!!$('.lastadv').offset()) {
-
-        var stickyTop = 2774;
-
-        $(window).scroll(function() {
-
-            var windowTop = $(window).scrollTop();
-            if (stickyTop < windowTop) {
-                $('.lastadv').css({
-                    position: 'fixed',
-                    top: 50,
-                    paddingLeft: 20
-                });
-            } else {
-                $('.lastadv').css('position', 'static');
-            }
-
-        });
-
-    }
-
-});
-
-/*
-$(function(){ // document ready
- 
-  if (!!$('.lastadv').offset()) { // make sure ".sticky" element exists
- 
-    var stickyTop = 2774; // returns number 
-    
-    $(window).scroll(function(){ // scroll event
-        
-      var windowTop = $(window).scrollTop(); // returns number    
-      if (stickyTop < windowTop){
-        
-      }
-      else {
-        $('.lastadv').css('position','static');
-      }
- 
-    });
- 
-  }
- 
-});
-
-
-jQuery('#news-slider').slippry({
-    // general elements & wrapper
-    slippryWrapper: '<div class="sy-box news-slider" />', // wrapper to wrap everything, including pager
-    elements: 'article', // elments cointaining slide content
-
-    // options
-    adaptiveHeight: false, // height of the sliders adapts to current 
-    captions: false,
-    pager: false,
-    // pager
-    pagerClass: 'news-pager',
-
-    // transitions
-    transition: 'horizontal', // fade, horizontal, kenburns, false
-    speed: 1200,
-    pause: 8000,
-
-    // slideshow
-    autoDirection: 'prev'
-});
-
-*/
-
-
 $(document).ready(function() {
+    !function(e,t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?module.exports=t():t()}(this,function(){function e(e){return e.replace(/<b[^>]*>(.*?)<\/b>/gi,function(e,t){return t}).replace(/class=".*?"|data-query-source=".*?"|dir=".*?"|rel=".*?"/gi,"")}function t(e){e=e.getElementsByTagName("a");for(var t=e.length-1;t>=0;t--)e[t].setAttribute("target","_blank")}function n(e,t){for(var n=[],s=new RegExp("(^| )"+t+"( |$)"),i=e.getElementsByTagName("*"),a=0,l=i.length;l>a;a++)s.test(i[a].className)&&n.push(i[a]);return n}var s="",i=20,a=!0,l=[],r=!1,o=!0,c=!0,d=null,p=!0,m=!0,u=null,h=!0,w=!1,g=!0,f=!0,v={fetch:function(e){if(void 0===e.maxTweets&&(e.maxTweets=20),void 0===e.enableLinks&&(e.enableLinks=!0),void 0===e.showUser&&(e.showUser=!0),void 0===e.showTime&&(e.showTime=!0),void 0===e.dateFunction&&(e.dateFunction="default"),void 0===e.showRetweet&&(e.showRetweet=!0),void 0===e.customCallback&&(e.customCallback=null),void 0===e.showInteraction&&(e.showInteraction=!0),void 0===e.showImages&&(e.showImages=!1),void 0===e.linksInNewWindow&&(e.linksInNewWindow=!0),void 0===e.showPermalinks&&(e.showPermalinks=!0),r)l.push(e);else{r=!0,s=e.domId,i=e.maxTweets,a=e.enableLinks,c=e.showUser,o=e.showTime,m=e.showRetweet,d=e.dateFunction,u=e.customCallback,h=e.showInteraction,w=e.showImages,g=e.linksInNewWindow,f=e.showPermalinks;var t=document.createElement("script");t.type="text/javascript",t.src="//cdn.syndication.twimg.com/widgets/timelines/"+e.id+"?&lang="+(e.lang||"en")+"&callback=twitterFetcher.callback&suppress_response_codes=true&rnd="+Math.random(),document.getElementsByTagName("head")[0].appendChild(t)}},callback:function(b){var y=document.createElement("div");y.innerHTML=b.body,"undefined"==typeof y.getElementsByClassName&&(p=!1),b=[];var T=[],k=[],C=[],x=[],E=[],N=[],_=0;if(p)for(y=y.getElementsByClassName("tweet");_<y.length;)x.push(0<y[_].getElementsByClassName("retweet-credit").length?!0:!1),(!x[_]||x[_]&&m)&&(b.push(y[_].getElementsByClassName("e-entry-title")[0]),E.push(y[_].getAttribute("data-tweet-id")),T.push(y[_].getElementsByClassName("p-author")[0]),k.push(y[_].getElementsByClassName("dt-updated")[0]),N.push(y[_].getElementsByClassName("permalink")[0]),C.push(void 0!==y[_].getElementsByClassName("inline-media")[0]?y[_].getElementsByClassName("inline-media")[0]:void 0)),_++;else for(y=n(y,"tweet");_<y.length;)b.push(n(y[_],"e-entry-title")[0]),E.push(y[_].getAttribute("data-tweet-id")),T.push(n(y[_],"p-author")[0]),k.push(n(y[_],"dt-updated")[0]),N.push(y[_].getElementsByClassName("permalink")[0]),C.push(void 0!==n(y[_],"inline-media")[0]?n(y[_],"inline-media")[0]:void 0),x.push(0<n(y[_],"retweet-credit").length?!0:!1),_++;for(b.length>i&&(b.splice(i,b.length-i),T.splice(i,T.length-i),k.splice(i,k.length-i),x.splice(i,x.length-i),C.splice(i,C.length-i),N.splice(i,N.length-i)),y=[],_=b.length,x=0;_>x;){if("string"!=typeof d){var B=k[x].getAttribute("datetime"),I=new Date(k[x].getAttribute("datetime").replace(/-/g,"/").replace("T"," ").split("+")[0]),B=d(I,B);if(k[x].setAttribute("aria-label",B),b[x].innerText)if(p)k[x].innerText=B;else{var I=document.createElement("p"),A=document.createTextNode(B);I.appendChild(A),I.setAttribute("aria-label",B),k[x]=I}else k[x].textContent=B}B="",a?(g&&(t(b[x]),c&&t(T[x])),c&&(B+='<div class="user">'+e(T[x].innerHTML)+"</div>"),B+='<p class="tweet">'+e(b[x].innerHTML)+"</p>",o&&(B=f?B+('<p class="timePosted"><a href="'+N[x]+'">'+k[x].getAttribute("aria-label")+"</a></p>"):B+('<p class="timePosted">'+k[x].getAttribute("aria-label")+"</p>"))):b[x].innerText?(c&&(B+='<p class="user">'+T[x].innerText+"</p>"),B+='<p class="tweet">'+b[x].innerText+"</p>",o&&(B+='<p class="timePosted">'+k[x].innerText+"</p>")):(c&&(B+='<p class="user">'+T[x].textContent+"</p>"),B+='<p class="tweet">'+b[x].textContent+"</p>",o&&(B+='<p class="timePosted">'+k[x].textContent+"</p>")),h&&(B+='<p class="interact"><a href="https://twitter.com/intent/tweet?in_reply_to='+E[x]+'" class="twitter_reply_icon"'+(g?' target="_blank">':">")+'Reply</a><a href="https://twitter.com/intent/retweet?tweet_id='+E[x]+'" class="twitter_retweet_icon"'+(g?' target="_blank">':">")+'Retweet</a><a href="https://twitter.com/intent/favorite?tweet_id='+E[x]+'" class="twitter_fav_icon"'+(g?' target="_blank">':">")+"Favorite</a></p>"),w&&void 0!==C[x]&&(I=C[x],void 0!==I?(I=I.innerHTML.match(/data-srcset="([A-z0-9%_\.-]+)/i)[0],I=decodeURIComponent(I).split('"')[1]):I=void 0,B+='<div class="media"><img src="'+I+'" alt="Image from tweet" /></div>'),y.push(B),x++}if(null===u){for(b=y.length,T=0,k=document.getElementById(s),C="<ul>";b>T;)C+="<li>"+y[T]+"</li>",T++;k.innerHTML=C+"</ul>"}else u(y);r=!1,0<l.length&&(v.fetch(l[0]),l.splice(0,1))}};return window.twitterFetcher=v});
+    
+    function genFeatured(type) {
 
-    function genFeatured() {
-
-        if (!!!templates) var templates = {};
-        templates["big"] = new Hogan.Template({
-            code: function(c, p, i) {
-                var t = this;
-                t.b(i = i || "");
-                t.b("<article> ");
-                t.b("\n" + i);
-                t.b("    <div class=\"slide\"> ");
-                t.b("\n" + i);
-                t.b("        <a id=\"mainFeaturedUrl\" href=\"");
-                t.b(t.v(t.f("slug", c, p, 0)));
-                t.b("\"><img class=\"img-responsive bigTitleImg\" src=\"fotoedicion/thumb_");
-                t.b(t.v(t.f("featured", c, p, 0)));
-                t.b("\" alt=\"\"></a> ");
-                t.b("\n" + i);
-                t.b("        <span class=\"category ");
-                t.b(t.v(t.f("css", c, p, 0)));
-                t.b("\" >");
-                t.b(t.v(t.f("category", c, p, 0)));
-                t.b("</span> ");
-                t.b("\n" + i);
-                t.b("        <span class=\"newTitle\"> ");
-                t.b("\n" + i);
-                t.b("            <a href=\"");
-                t.b(t.v(t.f("slug", c, p, 0)));
-                t.b("\"><h3 class=\"bigTitleSli\">");
-                t.b(t.v(t.f("title", c, p, 0)));
-                t.b("</h3></a>");
-                t.b("\n" + i);
-                t.b("        </span> ");
-                t.b("\n" + i);
-                t.b("    </div> ");
-                t.b("\n" + i);
-                t.b("</article>");
-                return t.fl();
+        if (!templates) var templates = {};
+        templates.big = new Hogan.Template({
+            code: function(b, s, a) {
+                var e = this;
+                return e.b(a = a || ""), e.b("<article> "), e.b("\n" + a), e.b('    <div class="slide"> '), e.b("\n" + a), e.b('        <a id="mainFeaturedUrl" href="'), e.b(e.v(e.f("slug", b, s, 0))), e.b('"><img class="img-responsive bigTitleImg" src="fotoedicion/thumb_'), e.b(e.v(e.f("featured", b, s, 0))), e.b('" alt=""></a> '), e.b("\n" + a), e.b('        <span class="category '), e.b(e.v(e.f("css", b, s, 0))), e.b('" >'), e.b(e.v(e.f("category", b, s, 0))), e.b("</span> "), e.b("\n" + a), e.b('        <span class="newTitle"> '), e.b("\n" + a), e.b('            <a href="'), e.b(e.v(e.f("slug", b, s, 0))), e.b('"><h3 class="bigTitleSli">'), e.b(e.v(e.f("title", b, s, 0))), e.b("</h3></a>"), e.b("\n" + a), e.b("        </span> "), e.b("\n" + a), e.b("    </div> "), e.b("\n" + a), e.b("</article>"), e.fl()
             },
             partials: {},
             subs: {}
-        });
-        templates["small"] = new Hogan.Template({
-            code: function(c, p, i) {
-                var t = this;
-                t.b(i = i || "");
-                t.b("<div class=\"row\"> ");
-                t.b("\n" + i);
-                t.b("<div class=\"col-md-12 col-lg-12 \"> ");
-                t.b("\n" + i);
-                t.b("    <a href=\"");
-                t.b(t.v(t.f("slug", c, p, 0)));
-                t.b("\"><img class=\"img-responsive topnews\" src=\"fotoedicion/thumb_");
-                t.b(t.v(t.f("featured", c, p, 0)));
-                t.b("\"></a> ");
-                t.b("\n" + i);
-                t.b("    <span class=\"categorysmall ");
-                t.b(t.v(t.f("css", c, p, 0)));
-                t.b("\">");
-                t.b(t.v(t.f("category", c, p, 0)));
-                t.b("</span> ");
-                t.b("\n" + i);
-                t.b("    <span class=\"newTitleSmall\"> ");
-                t.b("\n" + i);
-                t.b("        <a href=\"");
-                t.b(t.v(t.f("slug", c, p, 0)));
-                t.b("\"><h3>");
-                t.b(t.v(t.f("title", c, p, 0)));
-                t.b("</h3></a>");
-                t.b("\n" + i);
-                t.b("    </span> ");
-                t.b("\n" + i);
-                t.b("</div> ");
-                t.b("\n" + i);
-                t.b("</div>");
-                return t.fl();
+        }), templates.small = new Hogan.Template({
+            code: function(b, s, a) {
+                var e = this;
+                return e.b(a = a || ""), e.b('<div class="row"> '), e.b("\n" + a), e.b('<div class="col-md-12 col-lg-12 "> '), e.b("\n" + a), e.b('    <a href="'), e.b(e.v(e.f("slug", b, s, 0))), e.b('"><img class="img-responsive topnews" src="fotoedicion/thumb_'), e.b(e.v(e.f("featured", b, s, 0))), e.b('"></a> '), e.b("\n" + a), e.b('    <span class="categorysmall '), e.b(e.v(e.f("css", b, s, 0))), e.b('">'), e.b(e.v(e.f("category", b, s, 0))), e.b("</span> "), e.b("\n" + a), e.b('    <span class="newTitleSmall"> '), e.b("\n" + a), e.b('        <a href="'), e.b(e.v(e.f("slug", b, s, 0))), e.b('"><h3>'), e.b(e.v(e.f("title", b, s, 0))), e.b("</h3></a>"), e.b("\n" + a), e.b("    </span> "), e.b("\n" + a), e.b("</div> "), e.b("\n" + a), e.b("</div>"), e.fl()
             },
             partials: {},
             subs: {}
         });
 
         $.getJSON("featured.json", function(data) {
-
-            $("#smallNews").html("");
-            for (var i = 1; i < data.length; i++) {
-                var output = templates["small"].render(data[i]);
-                $("#smallNews").append(output);
+            if (type == true) {
+                $("#smallNews").html("");
+                for (var i = 1; i < data.length; i++) {
+                    var output = templates["small"].render(data[i]);
+                    $("#smallNews").append(output);
+                }
             }
+
+
             $("#news-slider").html("")
             var news = [];
             for (var i = 0; i < data.length; i++) {
@@ -355,141 +58,383 @@ $(document).ready(function() {
 
         });
     }
-    if (window.location.pathname === '/') {
-        genFeatured();
+
+    function facebookSidebar() {
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.3&appId=814402405268804";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     }
 
-    try {
-
-
-        var tweetslider = {
-            "id": '589861836763299840',
-            "domId": '',
-            "maxTweets": 10,
-            "enableLinks": true,
-            "showUser": false,
-            "showTime": true,
-            "dateFunction": '',
-            "showRetweet": false,
-            "customCallback": handleTweets,
-            "showInteraction": false
-
-        };
-
-        function handleTweets(tweets) {
-            var x = tweets.length;
-            var n = 0;
-            var element = document.getElementById('tweets');
-            var html = '<ul class="tweets">';
-            while (n < x) {
-                html += '<li>' + tweets[n] + '</li>';
-                n++;
+    function twitterSidebar() {
+        ! function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                p = /^http:/.test(d.location) ? 'http' : 'https';
+            if (!d.getElementById(id)) {
+                js = d.createElement(s);
+                js.id = id;
+                js.src = p + '://platform.twitter.com/widgets.js';
+                fjs.parentNode.insertBefore(js, fjs);
             }
-            html += '</ul>';
-            element.innerHTML = html;
-            $('.tweets').bxSlider({
-                mode: 'fade',
-                captions: false,
-                minSlides: 1,
-                maxSlides: 1,
-                controls: false,
-                slideMargin: 10,
-                pager: false,
-                auto: true,
-                pause: 5000
-            });
+        }(document, 'script', 'twitter-wjs');
+
+        try {
+
+
+            var tweetslider = {
+                "id": '589861836763299840',
+                "domId": '',
+                "maxTweets": 10,
+                "enableLinks": true,
+                "showUser": false,
+                "showTime": true,
+                "dateFunction": '',
+                "showRetweet": false,
+                "customCallback": handleTweets,
+                "showInteraction": false
+
+            };
+
+            function handleTweets(tweets) {
+                var x = tweets.length;
+                var n = 0;
+                var element = document.getElementById('tweets');
+                var html = '<ul class="tweets">';
+                while (n < x) {
+                    html += '<li>' + tweets[n] + '</li>';
+                    n++;
+                }
+                html += '</ul>';
+                element.innerHTML = html;
+                $('.tweets').bxSlider({
+                    mode: 'fade',
+                    captions: false,
+                    minSlides: 1,
+                    maxSlides: 1,
+                    controls: false,
+                    slideMargin: 10,
+                    pager: false,
+                    auto: true,
+                    pause: 5000
+                });
+            }
+
+            twitterFetcher.fetch(tweetslider);
+        } catch (err) {
+            console.log("twitter sidebar error")
         }
-
-        twitterFetcher.fetch(tweetslider);
-    } catch (err) {
-        console.log("twitter error.")
     }
 
-});
+    function loadAds(l, w, h, s) {
+
+        var place2 = document.querySelector(l);
+        place2.innerHTML = "";
+        var ins = document.createElement("ins");
+        var script = document.createElement("script");
+        var script2 = document.createElement("script");
+        script2.text = " (adsbygoogle = window.adsbygoogle || []).push({});"
+        ins.setAttribute("style", "display:inline-block;width:" + w + "px;height:" + h + "px;")
+        ins.setAttribute("data-ad-client", "ca-pub-6660576367227932")
+        ins.setAttribute("class", "adsbygoogle")
+        ins.setAttribute("data-ad-slot", s)
+        script.type = "text/javascript";
+        script.src = "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+
+        place2.appendChild(script);
+        place2.appendChild(ins);
+        place2.appendChild(script2);
 
 
-/* Twitter Button */
-! function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0],
-        p = /^http:/.test(d.location) ? 'http' : 'https';
-    if (!d.getElementById(id)) {
-        js = d.createElement(s);
-        js.id = id;
-        js.src = p + '://platform.twitter.com/widgets.js';
-        fjs.parentNode.insertBefore(js, fjs);
     }
-}(document, 'script', 'twitter-wjs');
-/* Twitter Button  Fin*/
 
+    function loadPlate() {
+        $('.plateinfo').html('<img src="/images/picoyplaca.jpg" height="386">')
+    }
 
-/* Facebook Sdk */
-(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s);
-    js.id = id;
-    js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.3&appId=814402405268804";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-/*Facebook SDK twitter */
+    function lazyLoad(l) {
+        $(l).onScreen({
+            lazyAttr: 'data-lazy'
+        });
+    }
 
+    function animatePosts() {
 
-/* Load IMG */
+        $('.post').onScreen({
+            doIn: function() {
+                $(this).animate({
+                    top: 0,
+                    opacity: 1
+                }, 500);
+            },
+            tolerance: 50
+        });
+    }
 
-function lazyLoad() {
-    /* 
-    To use the lazy loader, you must initialize onScreen and tell it 
-    which HTML attribute to look for.
-    onScreen will then replace the SRC value with the one from lazyAttr.
-    */
-    $('.postimg').onScreen({
-        lazyAttr: 'data-lazy'
-    });
-}
-
-function animatePosts() {
-    /*
-    In this example I used onScreen to animate the posts as
-    they become visible. I set the tolerance to 50 so the posts
-    start animating once they're 50px inside the viewport.
-    */
-    $('.post').onScreen({
-        doIn: function() {
-            $(this).animate({
-                top: 0,
-                opacity: 1
-            }, 500);
-        },
-        tolerance: 50
-    });
-}
-
-$(function() {
     function postResize() {
         height = $(".postContainer").height(); //$('.bigTitleImg:first').height();
         width = $(".postContainer").width(); //$('.bigTitleImg:first').width();
         $(".postPic").height(Math.round((height * 0.0775) + height)).width(Math.round((width * 0.0775) + width));
 
     }
-    animatePosts()
-    lazyLoad();
-    postResize();
+
+    function loader() {
+        Response.action(function() {
+            if (Response.band(992)) {
+                if (window.location.pathname === '/') {
+                    genFeatured(true);
+                    lazyLoad('.postimgl');
+                }
+                //loadAds(".side2501", '300', '250', '5745910000');
+                //loadAds(".side2502", '300', '250', '5745910000');
+                //loadAds(".side2503", '300', '600', '5062799202');
+                //facebookSidebar();
+                //twitterSidebar();
+                loadPlate();
+                animatePosts();
+
+            } else if (Response.band(992)) {
+                console.log("md")
+            } else if (Response.band(768)) {
+                console.log("sm");
+                if (window.location.pathname === '/') {
+                    genFeatured(false);
+                    animatePosts();
+                }
+            } else {
+                console.log("xs")
+                if (window.location.pathname === '/') {
+                    lazyLoad('.postimgs');
+                    animatePosts();
+                }
+            }
+        });
+
+    }
+    $(".socialMedia").on("click", function(event) {
+        event.preventDefault();
+        ga('send', 'event', 'share', $(this).data("network"), $(location).attr('href'));
+
+    });
+
     $('img').bind('error', function(e) {
         var src = this.src;
         this.src = "http://betalanacion.parawebs.com/fotoedicion/thumb_84c20ac6c9a47486381aceb7f6ccb466.jpg"
         ga('send', 'event', 'error', 'img', src);
     });
+    $('#nav').affix({
+        offset: {
+            top: function() {
+                return ($('header').height())
+            }
+        }
+    })
+     $("#mobileMenu").click(function(e) {
+        e.preventDefault();
+       // $("#wrapper").toggleClass("toggled");
+    });
+    if (!!$('.lastadv').offset()) {
 
+        var stickyTop = 2774;
+
+        $(window).scroll(function() {
+
+            var windowTop = $(window).scrollTop();
+            if (stickyTop < windowTop) {
+                $('.lastadv').css({
+                    position: 'fixed',
+                    top: 50,
+                    paddingLeft: 20
+                });
+            } else {
+                $('.lastadv').css('position', 'static');
+            }
+
+        });
+
+    }
     $(window).resize(function() {
-        postResize();
+        //postResize();
+        //loader();
+        //location.reload();
     });
 
-$(".socialMedia").on("click",function(event){
-    event.preventDefault();
-  ga('send', 'event', 'share', $(this).data("network"),  $(location).attr('href'));
-   
-});
+    loader();
+    postResize();
+    $('.dropdown-toggle').dropdown()
+    $('.dropdown-toggle').dropdownHover();
 
 });
+$(document).ready(function(e) {
+    $('.search-panel .dropdown-menu').find('a').click(function(e) {
+        e.preventDefault();
+        var param = $(this).attr("href").replace("#", "");
+        var concept = $(this).text();
+        $('.search-panel span#search_concept').text(concept);
+        $('.input-group #search_param').val(param);
+    });
+});
+/////////////////// Tracking /////////
 
-/* Load IMG */
+
+function Tracking() {
+    this.cookieName = "lanacion";
+    this.cookie = this.cookieSeter();
+    this.newid = document.querySelector("article").getAttribute("data-id");
+    this.slug = window.location.pathname;
+    this.cat = document.querySelector("article").getAttribute("data-cat");
+}
+Tracking.prototype.cookieSeter = function() {
+    var myCookie = this.getCookie();
+    if (myCookie == null) {
+        var ck = this.genGuid();
+        this.setCookie(ck);
+        return ck;
+    } else {
+        return myCookie;
+    }
+
+}
+
+
+Tracking.prototype.setCookie = function(val) {
+    document.cookie = this.cookieName + "=" + val + "; expires=Fri, 31 Dec 9999 23:59:59 GMT;"
+    if (Modernizr.localstorage) {
+    sessionStorage.setItem(this.cookieName , val);
+    localStorage.setItem(this.cookieName , val);
+    } 
+    
+
+}
+
+
+Tracking.prototype.sendTrack = function() {
+
+    'use strict';
+
+    var httpReq = new XMLHttpRequest();
+    var url = 'https://api.parse.com/1/classes/CurrentNews';
+    var fields = JSON.stringify({user:this.cookie,cat:this.cat,newId:this.newid});
+
+    httpReq.open('POST', url, true);
+
+    httpReq.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
+    httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
+    httpReq.setRequestHeader('Content-Type', 'application/json');
+
+    httpReq.onreadystatechange = function () {
+        if (httpReq.readyState === 4 && httpReq.status === 'success') {
+            //alert(httpReq.responseText);
+        }
+    };
+
+    httpReq.send(fields);
+
+}
+Tracking.prototype.renderRelationship = function(data) {
+if (!!!templates) var templates = {};
+templates["rel"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<div class=\"col-md-4 col-sm-4 referal \">");t.b("\n" + i);t.b("     <a href=\"");t.b(t.v(t.f("slug",c,p,0)));t.b("\">");t.b("\n" + i);t.b("    <img class=\"img-responsive text-center\" src=\"/fotoedicion/thumb_");t.b(t.v(t.f("image",c,p,0)));t.b("\">");t.b("\n" + i);t.b("        <h5>");t.b(t.v(t.f("title",c,p,0)));t.b("</h5></a>");t.b("\n" + i);t.b("    </div>");return t.fl(); },partials: {}, subs: {  }});
+
+    $("#related").html("");
+    for (var i = 0; i < data['results'].length; i++) {
+        var output = templates["rel"].render(data['results'][i]);
+        $("#related").append(output);
+    }
+
+}
+Tracking.prototype.renderRecomend = function(data) {
+if (!!!templates) var templates = {};
+templates["recomend"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<li class=\"relatedTitles \"><strong><a href=\"/");t.b(t.v(t.f("slug",c,p,0)));t.b("\">");t.b(t.v(t.f("title",c,p,0)));t.b("</a></strong></li>");return t.fl(); },partials: {}, subs: {  }});
+    $("#relatedNews").html("");
+    for (var i = 0; i < data['results'].length; i++) {
+        var output = templates["recomend"].render(data['results'][i]);
+        $("#relatedNews").append(output);
+    }
+
+}
+Tracking.prototype.getRelationships = function() {
+    'use strict';
+    var that = this;
+    var skipvar = Math.floor(Math.random() * (10 - 0)) + 1;
+    var params = 'where={"category":"'+this.cat+'"}&limit=3&skip='+skipvar.toString();
+    var httpReq = new XMLHttpRequest();
+    var url = 'https://api.parse.com/1/classes/Noticias?'+params;
+    httpReq.open('GET', url, true);
+    httpReq.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
+    httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
+    httpReq.setRequestHeader('Content-Type', 'application/json');
+
+    httpReq.onreadystatechange = function () {
+     if (httpReq.readyState === 4 && httpReq.status === 200) {
+
+            var data = JSON.parse(httpReq.responseText);
+            that.renderRelationship(data);
+     }
+    };
+
+    httpReq.send();
+
+}
+Tracking.prototype.getRecomend = function() {
+    'use strict';
+    var that = this;
+    var skipvar = Math.floor(Math.random() * (10 - 0)) + 1;
+    var params = 'where={"category":"'+this.cat+'"}&limit=3';
+    var httpReq = new XMLHttpRequest();
+    var url = 'https://api.parse.com/1/classes/Noticias?'+params;
+    httpReq.open('GET', url, true);
+    httpReq.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
+    httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
+    httpReq.setRequestHeader('Content-Type', 'application/json');
+
+    httpReq.onreadystatechange = function () {
+     if (httpReq.readyState === 4 && httpReq.status === 200) {
+
+            var data = JSON.parse(httpReq.responseText);
+            that.renderRecomend(data);
+     }
+    };
+
+    httpReq.send();
+
+}
+Tracking.prototype.getCookie = function() {
+    var name = this.cookieName + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return null;
+}
+
+Tracking.prototype.genGuid = function() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+};
+
+
+/////////////////// End Of Tracking /////////
+
+
+if (window.location.pathname !== '/') {
+
+    setTimeout(function() {
+        var track = new Tracking();
+        track.sendTrack();
+        track.getRelationships();
+        track.getRecomend();
+        //console.log(track);
+    }, 0);
+}
+
+

@@ -33,48 +33,43 @@ header {
 #nav > div > div > div.navbar-header > a > img {
     display: none;
 }
+
+
 /* nav line*/
 
-.homeLine {
-    border-top: 2px solid #fff;
+@media (min-width: 767px) {
+    .homeLine {
+        border-top: 2px solid #fff;
+    }
+    .politicaLine {
+        border-top: 2px solid #333;
+    }
+    .regionalLine {
+        border-top: 2px solid #8aa824;
+    }
+    .infogenLine {
+        border-top: 2px solid #65019a;
+    }
+    .nacionalLine {
+        border-top: 2px solid #b16f0a;
+    }
+    .internacionalLine {
+        border-top: 2px solid #029aca;
+    }
+    .opinionLine {
+        border-top: 2px solid #999;
+    }
+    .deportesLine {
+        border-top: 2px solid #d7ac00;
+    }
+    .sucesosLine {
+        border-top: 2px solid #6f0000;
+    }
+    .masLine {
+        border-top: 2px solid #000;
+    }
+    /* nav hover*/
 }
-
-.politicaLine {
-    border-top: 2px solid #333;
-}
-
-.regionalLine {
-    border-top: 2px solid #8aa824;
-}
-
-.infogenLine {
-    border-top: 2px solid #65019a;
-}
-
-.nacionalLine {
-    border-top: 2px solid #b16f0a;
-}
-
-.internacionalLine {
-    border-top: 2px solid #029aca;
-}
-
-.opinionLine {
-    border-top: 2px solid #999;
-}
-
-.deportesLine {
-    border-top: 2px solid #d7ac00;
-}
-
-.sucesosLine {
-    border-top: 2px solid #6f0000;
-}
-
-.masLine {
-    border-top: 2px solid #000;
-}
-/* nav hover*/
 
 .navbar-default .navbar-nav > li > a {
     color: #fff !important;
@@ -145,6 +140,8 @@ header {
     font-weight: 400;
     border: none;
 }
+
+
 /* end of color helpers */
 
 .headerhr {
@@ -170,6 +167,8 @@ header {
     position: fixed;
     top: 80px;
 }
+
+
 /* menu */
 
 @media (min-width: 1200px) {
@@ -223,6 +222,19 @@ header {
 .azul {
     background-color: #336799;
 }
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus {
+    background-color: #000000;
+}
+
+.dropdown-menu {
+    font-size: 13px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
 /* Search 18- */
 
 .search-form .form-group {
@@ -250,13 +262,11 @@ header {
 
 .search-form .form-group input.form-control:-moz-placeholder {
     /* Firefox 18- */
-    
     display: none;
 }
 
 .search-form .form-group input.form-control::-moz-placeholder {
     /* Firefox 19+ */
-    
     display: none;
 }
 
@@ -282,6 +292,8 @@ header {
     text-align: center;
     color: #3596e0;
 }
+
+
 /* News */
 
 .home {
@@ -312,6 +324,11 @@ header {
 .regional {
     color: #fff;
     background-color: #8aa824;
+}
+
+.cultura {
+    color: #fff;
+    background-color: #800824;
 }
 
 .infogen {
@@ -364,6 +381,8 @@ header {
     color: #fff;
     background-color: #E822A2;
 }
+
+
 /* slider */
 
 .slide {
@@ -492,7 +511,6 @@ body > div.container > div:nth-child(2) > div.col-md-4.hidden-xs.hidden-sm > div
 
 .adsLarge {
     /*padding: 20px;*/
-    
     padding-bottom: 20px;
 }
 
@@ -516,6 +534,8 @@ body > div.container > div:nth-child(2) > div.col-md-4.hidden-xs.hidden-sm > div
 .topnews:hover {
     opacity: 0.8;
 }
+
+
 /* Medium Devices, Desktops */
 
 @media only screen and (max-width: 992px) {
@@ -523,6 +543,8 @@ body > div.container > div:nth-child(2) > div.col-md-4.hidden-xs.hidden-sm > div
         height: 500px;
     }
 }
+
+
 /* POSTS */
 
 .post {
@@ -538,7 +560,6 @@ body > div.container > div:nth-child(2) > div.col-md-4.hidden-xs.hidden-sm > div
 
 .post .postHead {
     /*font-family: 'Open Sans', sans-serif;*/
-    
     font-size: 11px;
     padding-top: 10px;
     color: #737373;
@@ -566,7 +587,6 @@ body > div.container > div:nth-child(2) > div.col-md-4.hidden-xs.hidden-sm > div
 
 .post .postHead > p {
     /* font-family: 'Open Sans', sans-serif;*/
-    
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
     font-size: 13px;
     margin-top: 10px;
@@ -770,6 +790,8 @@ footer {
     font-size: 18px;
     margin-bottom: 9px;
 }
+
+
 /* POST PAGES */
 
 .psection {
@@ -837,7 +859,6 @@ article > div > div > i.fa:hover {
 .postContent {
     /*font-family: 'Gentium Basic', serif;
   font-family: 'Open Sans', sans-serif¨*/
-    
     padding-top: 20px;
     font-size: 15px;
 }
@@ -848,14 +869,13 @@ article > div > div > i.fa:hover {
     margin-bottom: 20px;
 }
 
-.addSize{
-        height: 251px;
+.addSize {
+    height: 251px;
     width: 301px;
 }
+
 .suggestad-xs {
-    margin-bottom: 20px;    
-
-
+    margin-bottom: 20px;
 }
 
 .cita {
@@ -880,6 +900,7 @@ article > div > div > i.fa:hover {
 
 .relatedContent {
     padding-top: 15px;
+    min-height: 140px;
 }
 
 .relatedNews {
@@ -897,17 +918,25 @@ article > div > div > i.fa:hover {
     border-bottom: 1px solid #d3cfca;
 }
 
-.relatedTitles {
+.relatedTitles  {
     padding-top: 5px;
     padding-bottom: 5px;
     border-bottom: 1px solid #d3cfca;
     font-size: 13px;
 }
 
-.relatedTitles:hover {
+.relatedTitles > strong > a {
+    font-size: 13px;
+    color: #000;
+    text-decoration: none;
+}
+
+.relatedTitles:hover > strong > a{
     cursor: pointer;
     color: #336799;
 }
+
+
 /* Clasificados */
 
 .classified {
@@ -947,6 +976,8 @@ article > div > div > i.fa:hover {
 .classifiedExt {
     padding-top: 30px;
 }
+
+
 /* Logos 
 
 .desaturate { -webkit-filter: grayscale(100%); filter: grayscale(100%); margin-left: 10px; margin-bottom: 10px;}
@@ -958,6 +989,8 @@ article > div > div > i.fa:hover {
     margin-top: 10px;
     font-size: 10px;
 }
+
+
 /* Menu Clasificados */
 
 .classifiedNav > li {
@@ -988,6 +1021,8 @@ article > div > div > i.fa:hover {
     padding-top: 10px;
     list-style: none;
 }
+
+
 /* Main Clasificados */
 
 .place {
@@ -1047,4 +1082,104 @@ article > div > div > i.fa:hover {
     margin: 0 auto;
     margin-bottom: 20px;
 }
-/* search Clasificados */
+
+
+/* search */
+
+.searchFrom {
+    width: 100%;
+    height: 50px;
+    margin: 0 auto;
+    position: relative;
+    -webkit-transition-property: width, height, -webkit-transform;
+    transition-property: width, height, transform;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+    transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+}
+
+
+.morphsearch-input {
+    width: 100%;
+    height: 100%;
+    padding: 0 10% 0 10px;
+    font-weight: 700;
+    border: none;
+    background: transparent;
+    font-size: 40px;
+    color: #336799;
+    -webkit-transition: font-size 0.5s cubic-bezier(0.7,0,0.3,1);
+    transition: font-size 0.5s cubic-bezier(0.7,0,0.3,1);
+}
+
+.morphsearch-input::-ms-clear { /* remove cross in IE */
+    display: none;
+}
+
+.morphsearch.hideInput .morphsearch-input {
+    color: transparent;
+    -webkit-transition: color 0.3s;
+    transition: color 0.3s;
+}
+
+.morphsearch.open .morphsearch-input {
+    font-size: 7em;
+}
+
+/* placeholder */
+.morphsearch-input::-webkit-input-placeholder {
+    color: #c2c2c2;
+}
+
+.morphsearch-input:-moz-placeholder {
+    color: #c2c2c2;
+}
+
+.morphsearch-input::-moz-placeholder {
+    color: #c2c2c2;
+}
+
+.morphsearch-input:-ms-input-placeholder {
+    color: #c2c2c2;
+}
+
+/* hide placeholder when active in Chrome */
+.gn-search:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+input[type="search"] { /* reset normalize */
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box; 
+}
+
+.morphsearch-input:focus,
+.morphsearch-submit:focus {
+    outline: none;
+}
+
+
+.morphsearch-submit {
+   
+    background: transparent url(/images/magnifier.png) no-repeat center center;
+    background-size: 100%;
+    border: none;
+    pointer-events: none;
+    transform-origin: 50% 50%;
+    opacity: 0;
+    -webkit-transform: translate3d(-30px,-50%,0) scale3d(0,0,1);
+    transform: translate3d(-30px,-50%,0) scale3d(0,0,1);
+}
+
+.morphsearch.open .morphsearch-submit {
+    pointer-events: auto;
+    opacity: 1;
+    -webkit-transform: translate3d(-30px,-50%,0) scale3d(1,1,1);
+    transform: translate3d(-30px,-50%,0) scale3d(1,1,1);
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    -webkit-transition-delay: 0.5s;
+    transition-delay: 0.5s;
+}
+
