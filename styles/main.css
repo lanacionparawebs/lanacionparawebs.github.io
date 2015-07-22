@@ -244,12 +244,14 @@ header {
     transition: all .35s, border-radius 0s;
     border-radius: 25px;
     background-color: #fff;
-    cursor:pointer;
+    cursor: pointer;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset;
 }
+
 #search {
-    cursor:pointer;
+    cursor: pointer;
 }
+
 .search-form .form-group input.form-control {
     display: block;
     padding-right: 20px;
@@ -278,7 +280,7 @@ header {
 
 .search-form .form-group:hover,
 .search-form .form-group.hover {
-  /*  width: 100%; */
+    /*  width: 100%; */
     border-radius: 25px 25px 25px 25px;
 }
 
@@ -871,6 +873,10 @@ article > div > div > i.fa:hover {
     margin-bottom: 20px;
 }
 
+.postContent img {
+    max-width: 600px;
+}
+
 .addSize {
     height: 251px;
     width: 301px;
@@ -920,7 +926,7 @@ article > div > div > i.fa:hover {
     border-bottom: 1px solid #d3cfca;
 }
 
-.relatedTitles  {
+.relatedTitles {
     padding-top: 5px;
     padding-bottom: 5px;
     border-bottom: 1px solid #d3cfca;
@@ -933,7 +939,7 @@ article > div > div > i.fa:hover {
     text-decoration: none;
 }
 
-.relatedTitles:hover > strong > a{
+.relatedTitles:hover > strong > a {
     cursor: pointer;
     color: #336799;
 }
@@ -1097,10 +1103,9 @@ article > div > div > i.fa:hover {
     transition-property: width, height, transform;
     -webkit-transition-duration: 0.5s;
     transition-duration: 0.5s;
-    -webkit-transition-timing-function: cubic-bezier(0.7,0,0.3,1);
-    transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+    -webkit-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+    transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
 }
-
 
 .morphsearch-input {
     width: 100%;
@@ -1111,11 +1116,12 @@ article > div > div > i.fa:hover {
     background: transparent;
     font-size: 40px;
     color: #336799;
-    -webkit-transition: font-size 0.5s cubic-bezier(0.7,0,0.3,1);
-    transition: font-size 0.5s cubic-bezier(0.7,0,0.3,1);
+    -webkit-transition: font-size 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+    transition: font-size 0.5s cubic-bezier(0.7, 0, 0.3, 1);
 }
 
-.morphsearch-input::-ms-clear { /* remove cross in IE */
+.morphsearch-input::-ms-clear {
+    /* remove cross in IE */
     display: none;
 }
 
@@ -1129,7 +1135,9 @@ article > div > div > i.fa:hover {
     font-size: 7em;
 }
 
+
 /* placeholder */
+
 .morphsearch-input::-webkit-input-placeholder {
     color: #c2c2c2;
 }
@@ -1146,14 +1154,17 @@ article > div > div > i.fa:hover {
     color: #c2c2c2;
 }
 
+
 /* hide placeholder when active in Chrome */
+
 .gn-search:focus::-webkit-input-placeholder {
     color: transparent;
 }
 
-input[type="search"] { /* reset normalize */
-    -webkit-box-sizing: border-box; 
-    box-sizing: border-box; 
+input[type="search"] {
+    /* reset normalize */
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .morphsearch-input:focus,
@@ -1161,27 +1172,24 @@ input[type="search"] { /* reset normalize */
     outline: none;
 }
 
-
 .morphsearch-submit {
-   
     background: transparent url(/images/magnifier.png) no-repeat center center;
     background-size: 100%;
     border: none;
     pointer-events: none;
     transform-origin: 50% 50%;
     opacity: 0;
-    -webkit-transform: translate3d(-30px,-50%,0) scale3d(0,0,1);
-    transform: translate3d(-30px,-50%,0) scale3d(0,0,1);
+    -webkit-transform: translate3d(-30px, -50%, 0) scale3d(0, 0, 1);
+    transform: translate3d(-30px, -50%, 0) scale3d(0, 0, 1);
 }
 
 .morphsearch.open .morphsearch-submit {
     pointer-events: auto;
     opacity: 1;
-    -webkit-transform: translate3d(-30px,-50%,0) scale3d(1,1,1);
-    transform: translate3d(-30px,-50%,0) scale3d(1,1,1);
+    -webkit-transform: translate3d(-30px, -50%, 0) scale3d(1, 1, 1);
+    transform: translate3d(-30px, -50%, 0) scale3d(1, 1, 1);
     -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
     transition: opacity 0.3s, transform 0.3s;
     -webkit-transition-delay: 0.5s;
     transition-delay: 0.5s;
 }
-

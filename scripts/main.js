@@ -263,7 +263,7 @@ $(document).ready(function() {
     $(window).resize(function() {
         //postResize();
         //loader();
-        location.reload();
+       // location.reload();
     });
 
     loader();
