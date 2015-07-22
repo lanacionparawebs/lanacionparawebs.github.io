@@ -259,7 +259,7 @@ $(document).ready(function() {
     $(window).resize(function() {
         //postResize();
         //loader();
-        //location.reload();
+        location.reload();
     });
 
     loader();
@@ -271,12 +271,24 @@ $(document).ready(function() {
 $(document).ready(function(e) {
     $('.search-panel .dropdown-menu').find('a').click(function(e) {
         e.preventDefault();
-        var param = $(this).attr("href").replace("#", "");
-        var concept = $(this).text();
-        $('.search-panel span#search_concept').text(concept);
-        $('.input-group #search_param').val(param);
+      //  var param = $(this).attr("href").replace("#", "");
+       // var concept = $(this).text();
+       // $('.search-panel span#search_concept').text(concept);
+       // $('.input-group #search_param').val(param);
     });
 });
+$(".postLine div:nth-child(5)").before('<div class="col-xs-12 col-sm-6 col-md-6"><img src="/images/Laboratorio_Alfa_2_Arte.gif" alt="" style="max-width: 310px;"></div>');
+    
+ $('#search').click(function(e) {
+        e.preventDefault();
+     // $('#menuModal').modal('show');
+    });
+$('#menuModal').on('show.bs.modal', function (e) {
+            //      $('.lastadv').css('position', 'static');
+
+})
+
+
 /////////////////// Tracking /////////
 
 

@@ -242,12 +242,14 @@ header {
     width: 32px;
     height: 32px;
     transition: all .35s, border-radius 0s;
-    border: 1px solid #ccc;
     border-radius: 25px;
     background-color: #fff;
+    cursor:pointer;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset;
 }
-
+#search {
+    cursor:pointer;
+}
 .search-form .form-group input.form-control {
     display: block;
     padding-right: 20px;
@@ -276,7 +278,7 @@ header {
 
 .search-form .form-group:hover,
 .search-form .form-group.hover {
-    width: 100%;
+  /*  width: 100%; */
     border-radius: 25px 25px 25px 25px;
 }
 
@@ -691,7 +693,7 @@ body > div.container > div:nth-child(2) > div.col-md-4.hidden-xs.hidden-sm > div
 }
 
 .lastadv {
-    z-index: 9999;
+    z-index: -1;
 }
 
 .adsside {
