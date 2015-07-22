@@ -186,10 +186,11 @@ $(document).ready(function() {
             if (Response.band(992)) {
                 if (window.location.pathname === '/') {
                     genFeatured(true);
-                    lazyLoad('.postimgl');
                     $(".postLine div:nth-child(5)").before('<div class="col-xs-12 col-sm-6 col-md-6"><img src="/images/Laboratorio_Alfa_2_Arte.gif" alt="" style="max-width: 310px;"></div>');
 
                 }
+                                    lazyLoad('.postimgl');
+
                 loadAds(".side2501", '300', '250', '5745910000');
                 loadAds(".side2502", '300', '250', '5745910000');
                 loadAds(".side2503", '300', '600', '5062799202');
