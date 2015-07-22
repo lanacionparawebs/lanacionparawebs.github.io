@@ -187,6 +187,8 @@ $(document).ready(function() {
                 if (window.location.pathname === '/') {
                     genFeatured(true);
                     lazyLoad('.postimgl');
+                    $(".postLine div:nth-child(5)").before('<div class="col-xs-12 col-sm-6 col-md-6"><img src="/images/Laboratorio_Alfa_2_Arte.gif" alt="" style="max-width: 310px;"></div>');
+
                 }
                 loadAds(".side2501", '300', '250', '5745910000');
                 loadAds(".side2502", '300', '250', '5745910000');
@@ -195,7 +197,6 @@ $(document).ready(function() {
                 twitterSidebar();
                 loadPlate();
                 animatePosts();
-                $(".postLine div:nth-child(5)").before('<div class="col-xs-12 col-sm-6 col-md-6"><img src="/images/Laboratorio_Alfa_2_Arte.gif" alt="" style="max-width: 310px;"></div>');
 
 
             } else if (Response.band(992)) {
