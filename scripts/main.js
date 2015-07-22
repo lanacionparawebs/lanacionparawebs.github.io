@@ -195,6 +195,8 @@ $(document).ready(function() {
                 twitterSidebar();
                 loadPlate();
                 animatePosts();
+                $(".postLine div:nth-child(5)").before('<div class="col-xs-12 col-sm-6 col-md-6"><img src="/images/Laboratorio_Alfa_2_Arte.gif" alt="" style="max-width: 310px;"></div>');
+
 
             } else if (Response.band(992)) {
                 console.log("md")
@@ -277,8 +279,7 @@ $(document).ready(function(e) {
        // $('.input-group #search_param').val(param);
     });
 });
-$(".postLine div:nth-child(5)").before('<div class="col-xs-12 col-sm-6 col-md-6"><img src="/images/Laboratorio_Alfa_2_Arte.gif" alt="" style="max-width: 310px;"></div>');
-    
+
  $('#search').click(function(e) {
         e.preventDefault();
      // $('#menuModal').modal('show');
