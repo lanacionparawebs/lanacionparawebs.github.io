@@ -292,15 +292,24 @@ $('#menuModal').on('show.bs.modal', function (e) {
 
 
 /////////////////// Tracking /////////
-
-
 function Tracking() {
+    try {
+        this.newid = document.querySelector("article").getAttribute("data-id");
+
+    } catch (e) {
+        this.newid = "0"
+    }
+    try {
+        this.cat = document.querySelector("article").getAttribute("data-cat");
+
+    } catch (e) {
+        this.cat = "unk"
+    }
     this.cookieName = "lanacion";
     this.cookie = this.cookieSeter();
-    this.newid = document.querySelector("article").getAttribute("data-id");
     this.slug = window.location.pathname;
-    this.cat = document.querySelector("article").getAttribute("data-cat");
 }
+
 Tracking.prototype.cookieSeter = function() {
     var myCookie = this.getCookie();
     if (myCookie == null) {
