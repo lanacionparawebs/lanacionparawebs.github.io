@@ -188,11 +188,11 @@ $(document).ready(function() {
                     genFeatured(true);
                     lazyLoad('.postimgl');
                 }
-                //loadAds(".side2501", '300', '250', '5745910000');
-                //loadAds(".side2502", '300', '250', '5745910000');
-                //loadAds(".side2503", '300', '600', '5062799202');
-                //facebookSidebar();
-                //twitterSidebar();
+                loadAds(".side2501", '300', '250', '5745910000');
+                loadAds(".side2502", '300', '250', '5745910000');
+                loadAds(".side2503", '300', '600', '5062799202');
+                facebookSidebar();
+                twitterSidebar();
                 loadPlate();
                 animatePosts();
 
