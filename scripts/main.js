@@ -131,7 +131,6 @@ $(document).ready(function() {
     }
 
     function adSpot(data) {
-//  loadAds(".side2501", '300', '250', '5745910000');
           
         var adsense = '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  \
         <ins class="adsbygoogle"  \
@@ -178,8 +177,8 @@ $(document).ready(function() {
         if (Response.band(992)) {
             if (window.location.pathname === '/') {
                 genFeatured(true);
-                if ( localStorage.addInsert == "false") {
-                     localStorage.addInsert = true;
+                if ( sessionStorage.addInsert == "false") {
+                     sessionStorage.addInsert = true;
                     console.log("insert Lab")
                     $(".postLine div:nth-child(5)").before('<div class="col-xs-12 col-sm-6 col-md-6"><img src="/images/Laboratorio_Alfa_2_Arte.gif" alt="" style="max-width: 310px;"></div>');
 
@@ -188,21 +187,9 @@ $(document).ready(function() {
             }
             lazyLoad('.postimgl');
 
-            adSpot({
-                "Spot": ".side2501",
-                "ancho": '300',
-                "alto": '250'
-            });
-            adSpot({
-                "Spot": ".side2502",
-                "ancho": '300',
-                "alto": '250'
-            });
-            adSpot({
-                "Spot": ".side2503",
-                "ancho": '300',
-                "alto": '600'
-            });
+            //adSpot({"Spot": ".side2501","ancho": '300',"alto": '250'});
+            //adSpot({"Spot": ".side2502","ancho": '300',"alto": '250'});
+            //adSpot({"Spot": ".side2503","ancho": '300', "alto": '600' });
             facebookSidebar();
             twitterSidebar();
             loadPlate();
@@ -276,7 +263,7 @@ $(document).ready(function() {
         //loader();
        // location.reload();
     });
-        localStorage.addInsert = false;
+        sessionStorage.addInsert = false;
 
         loader();
 
