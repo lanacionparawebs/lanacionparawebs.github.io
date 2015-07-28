@@ -203,10 +203,10 @@ $(document).ready(function() {
                 "ancho": '300',
                 "alto": '600'
             });
-            //facebookSidebar();
-            //twitterSidebar();
-            //loadPlate();
-            //animatePosts();
+            facebookSidebar();
+            twitterSidebar();
+            loadPlate();
+            animatePosts();
 
 
         } else if (Response.band(992)) {
