@@ -47,6 +47,7 @@ $(document).ready(function() {
                     captions: false,
                     minSlides: 1,
                     maxSlides: 1,
+                    randomStart:true,
                     controls: true,
                     slideMargin: 10,
                     pager: false,
@@ -129,26 +130,18 @@ $(document).ready(function() {
         }
     }
 
-    function loadAds(l, w, h, s) {
-
-        var place2 = document.querySelector(l);
-        place2.innerHTML = "";
-        var ins = document.createElement("ins");
-        var script = document.createElement("script");
-        var script2 = document.createElement("script");
-        script2.text = " (adsbygoogle = window.adsbygoogle || []).push({});"
-        ins.setAttribute("style", "display:inline-block;width:" + w + "px;height:" + h + "px;")
-        ins.setAttribute("data-ad-client", "ca-pub-6660576367227932")
-        ins.setAttribute("class", "adsbygoogle")
-        ins.setAttribute("data-ad-slot", s)
-        script.type = "text/javascript";
-        script.src = "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-
-        place2.appendChild(script);
-        place2.appendChild(ins);
-        place2.appendChild(script2);
-
-
+    function adSpot(data) {
+//  loadAds(".side2501", '300', '250', '5745910000');
+          
+        var adsense = '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  \
+        <ins class="adsbygoogle"  \
+             style="display:inline-block;width:300px;height:250px"  \
+             data-ad-client="ca-pub-6660576367227932"  \
+             data-ad-slot="1397388415"></ins>  \
+        <script>  \
+        (adsbygoogle = window.adsbygoogle || []).push({});  \
+        </script>';
+        $(data['Spot']).html(adsense);
     }
 
     function loadPlate() {
@@ -180,44 +173,62 @@ $(document).ready(function() {
         $(".postPic").height(Math.round((height * 0.0775) + height)).width(Math.round((width * 0.0775) + width));
 
     }
-
     function loader() {
-        Response.action(function() {
-            if (Response.band(992)) {
-                if (window.location.pathname === '/') {
-                    genFeatured(true);
+    Response.action(function() {
+        if (Response.band(992)) {
+            if (window.location.pathname === '/') {
+                genFeatured(true);
+                if ( localStorage.addInsert == "false") {
+                     localStorage.addInsert = true;
+                    console.log("insert Lab")
                     $(".postLine div:nth-child(5)").before('<div class="col-xs-12 col-sm-6 col-md-6"><img src="/images/Laboratorio_Alfa_2_Arte.gif" alt="" style="max-width: 310px;"></div>');
 
                 }
-                                    lazyLoad('.postimgl');
 
-                loadAds(".side2501", '300', '250', '5745910000');
-                loadAds(".side2502", '300', '250', '5745910000');
-                loadAds(".side2503", '300', '600', '5062799202');
-                facebookSidebar();
-                twitterSidebar();
-                loadPlate();
-                animatePosts();
-
-
-            } else if (Response.band(992)) {
-                console.log("md")
-            } else if (Response.band(768)) {
-                console.log("sm");
-                if (window.location.pathname === '/') {
-                    genFeatured(false);
-                    animatePosts();
-                }
-            } else {
-                console.log("xs")
-                if (window.location.pathname === '/') {
-                    lazyLoad('.postimgs');
-                    animatePosts();
-                }
             }
-        });
+            lazyLoad('.postimgl');
 
-    }
+            adSpot({
+                "Spot": ".side2501",
+                "ancho": '300',
+                "alto": '250'
+            });
+            adSpot({
+                "Spot": ".side2502",
+                "ancho": '300',
+                "alto": '250'
+            });
+            adSpot({
+                "Spot": ".side2503",
+                "ancho": '300',
+                "alto": '600'
+            });
+            //facebookSidebar();
+            //twitterSidebar();
+            //loadPlate();
+            //animatePosts();
+
+
+        } else if (Response.band(992)) {
+            console.log("md")
+        } else if (Response.band(768)) {
+            console.log("sm");
+            if (window.location.pathname === '/') {
+                genFeatured(false);
+                animatePosts();
+            }
+        } else {
+            console.log("xs")
+            if (window.location.pathname === '/') {
+                lazyLoad('.postimgs');
+                animatePosts();
+            }
+        }
+    });
+
+}
+
+
     $(".socialMedia").on("click", function(event) {
         event.preventDefault();
         ga('send', 'event', 'share', $(this).data("network"), $(location).attr('href'));
@@ -265,8 +276,10 @@ $(document).ready(function() {
         //loader();
        // location.reload();
     });
+        localStorage.addInsert = false;
 
-    loader();
+        loader();
+
     postResize();
     $('.dropdown-toggle').dropdown()
     $('.dropdown-toggle').dropdownHover();
@@ -275,16 +288,13 @@ $(document).ready(function() {
 $(document).ready(function(e) {
     $('.search-panel .dropdown-menu').find('a').click(function(e) {
         e.preventDefault();
-      //  var param = $(this).attr("href").replace("#", "");
-       // var concept = $(this).text();
-       // $('.search-panel span#search_concept').text(concept);
-       // $('.input-group #search_param').val(param);
+
     });
 });
 
  $('#search').click(function(e) {
         e.preventDefault();
-     // $('#menuModal').modal('show');
+         $('#menuModal').modal('show');
     });
 $('#menuModal').on('show.bs.modal', function (e) {
             //      $('.lastadv').css('position', 'static');
@@ -358,28 +368,36 @@ Tracking.prototype.sendTrack = function() {
     httpReq.send(fields);
 
 }
-Tracking.prototype.renderRelationship = function(data) {
-if (!!!templates) var templates = {};
-templates["rel"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<div class=\"col-md-4 col-sm-4 referal \">");t.b("\n" + i);t.b("     <a href=\"");t.b(t.v(t.f("slug",c,p,0)));t.b("\">");t.b("\n" + i);t.b("    <img class=\"img-responsive text-center\" src=\"/fotoedicion/thumb_");t.b(t.v(t.f("image",c,p,0)));t.b("\">");t.b("\n" + i);t.b("        <h5>");t.b(t.v(t.f("title",c,p,0)));t.b("</h5></a>");t.b("\n" + i);t.b("    </div>");return t.fl(); },partials: {}, subs: {  }});
 
-    $("#related").html("");
-    for (var i = 0; i < data['results'].length; i++) {
-        var output = templates["rel"].render(data['results'][i]);
-        $("#related").append(output);
-    }
-
-}
 Tracking.prototype.renderRecomend = function(data) {
-if (!!!templates) var templates = {};
-templates["recomend"] = new Hogan.Template({code: function (c,p,i) { var t=this;t.b(i=i||"");t.b("<li class=\"relatedTitles \"><strong><a href=\"/");t.b(t.v(t.f("slug",c,p,0)));t.b("\">");t.b(t.v(t.f("title",c,p,0)));t.b("</a></strong></li>");return t.fl(); },partials: {}, subs: {  }});
-    $("#relatedNews").html("");
+    var items = [];
     for (var i = 0; i < data['results'].length; i++) {
-        var output = templates["recomend"].render(data['results'][i]);
-        $("#relatedNews").append(output);
+
+        items.push(data['results'][i]);
     }
+    riot.mount('recommendations', {
+        title: 'LA NACION RECOMIENDA..',
+        items: items
+    })
+
 
 }
-Tracking.prototype.getRelationships = function() {
+Tracking.prototype.renderRelated = function(data) {
+    var items = [];
+    for (var i = 0; i < data['results'].length; i++) {
+
+        items.push(data['results'][i]);
+    }
+    riot.mount('related', {
+        title: 'QUIZÀS QUIERAS VER..',
+        items: items
+    })
+
+
+}
+
+
+Tracking.prototype.getRelated = function() {
     'use strict';
     var that = this;
     var skipvar = Math.floor(Math.random() * (10 - 0)) + 1;
@@ -395,7 +413,7 @@ Tracking.prototype.getRelationships = function() {
      if (httpReq.readyState === 4 && httpReq.status === 200) {
 
             var data = JSON.parse(httpReq.responseText);
-            that.renderRelationship(data);
+            that.renderRelated(data);
      }
     };
 
@@ -424,6 +442,9 @@ Tracking.prototype.getRecomend = function() {
 
     httpReq.send();
 
+}
+Tracking.prototype.getCat = function() {
+    return this.cat
 }
 Tracking.prototype.getCookie = function() {
     var name = this.cookieName + "=";
@@ -455,10 +476,14 @@ if (window.location.pathname !== '/') {
     setTimeout(function() {
         var track = new Tracking();
         track.sendTrack();
-        track.getRelationships();
+        track.getRelated();
         track.getRecomend();
+        if (track.getCat() == "obituarios"){
+            $(".rela").hide();
+        }
         //console.log(track);
     }, 0);
 }
+
 
 

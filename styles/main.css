@@ -159,6 +159,9 @@ header {
     width: 100%;
 }
 
+.oculto {
+    display:none;
+}
 #sidebar.affix-top {
     position: static;
 }
