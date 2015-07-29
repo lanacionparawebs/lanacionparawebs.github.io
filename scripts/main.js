@@ -110,7 +110,12 @@ $(document).ready(function() {
                     n++;
                 }
                 html += '</ul>';
-                element.innerHTML = html;
+                try{
+                    element.innerHTML = html;
+
+                }catch(e){
+
+                }
                 $('.tweets').bxSlider({
                     mode: 'fade',
                     captions: false,
@@ -224,9 +229,10 @@ $(document).ready(function() {
 
     $('img').bind('error', function(e) {
         var src = this.src;
-        this.src = "http://betalanacion.parawebs.com/fotoedicion/thumb_84c20ac6c9a47486381aceb7f6ccb466.jpg"
+        this.src = "/fotoedicion/thumb_84c20ac6c9a47486381aceb7f6ccb466.jpg"
         ga('send', 'event', 'error', 'img', src);
     });
+
     $('#nav').affix({
         offset: {
             top: function() {
@@ -354,13 +360,34 @@ Tracking.prototype.sendTrack = function() {
 
     httpReq.send(fields);
 
+
+    'use strict';
+
+    var httpReq = new XMLHttpRequest();
+    var url = 'https://api.parse.com/1/functions/mostRead';
+    var fields = JSON.stringify({news:this.newid});
+
+    httpReq.open('POST', url, true);
+
+    httpReq.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
+    httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
+    httpReq.setRequestHeader('Content-Type', 'application/json');
+
+    httpReq.onreadystatechange = function () {
+        if (httpReq.readyState === 4 && httpReq.status === 'success') {
+            //alert(httpReq.responseText);
+        }
+    };
+
+    httpReq.send(fields);
+
 }
 
 Tracking.prototype.renderRecomend = function(data) {
     var items = [];
-    for (var i = 0; i < data['results'].length; i++) {
+    for (var i = 0; i < data['result'].length; i++) {
 
-        items.push(data['results'][i]);
+        items.push(data['result'][i]);
     }
     riot.mount('recommendations', {
         title: 'LA NACION RECOMIENDA..',
@@ -369,11 +396,26 @@ Tracking.prototype.renderRecomend = function(data) {
 
 
 }
+
+Tracking.prototype.renderTopNews = function() {
+    setTimeout(function() {
+        var url = 'http://lanacionweb.parseapp.com/top';
+        $.getJSON(url, function(data) {
+            console.log(data);
+            riot.mount('top', {
+                items: data
+            })
+
+
+        });
+    }, 1000);
+}
+
 Tracking.prototype.renderRelated = function(data) {
     var items = [];
-    for (var i = 0; i < data['results'].length; i++) {
+    for (var i = 0; i < data['result'].length; i++) {
 
-        items.push(data['results'][i]);
+        items.push(data['result'][i]);
     }
     riot.mount('related', {
         title: 'QUIZÀS QUIERAS VER..',
@@ -385,51 +427,54 @@ Tracking.prototype.renderRelated = function(data) {
 
 
 Tracking.prototype.getRelated = function() {
-    'use strict';
-    var that = this;
-    var skipvar = Math.floor(Math.random() * (10 - 0)) + 1;
-    var params = 'where={"category":"'+this.cat+'"}&limit=3&skip='+skipvar.toString();
-    var httpReq = new XMLHttpRequest();
-    var url = 'https://api.parse.com/1/classes/Noticias?'+params;
-    httpReq.open('GET', url, true);
-    httpReq.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
-    httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
-    httpReq.setRequestHeader('Content-Type', 'application/json');
+        'use strict';
+        var that = this;
+        var httpReq = new XMLHttpRequest();
+        var url = 'https://api.parse.com/1/functions/relatedNews';
+        var fields = JSON.stringify({category:this.cat,news:this.newid});
 
-    httpReq.onreadystatechange = function () {
-     if (httpReq.readyState === 4 && httpReq.status === 200) {
+        httpReq.open('POST', url, true);
 
-            var data = JSON.parse(httpReq.responseText);
-            that.renderRelated(data);
-     }
-    };
+        httpReq.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
+        httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
+        httpReq.setRequestHeader('Content-Type', 'application/json');
 
-    httpReq.send();
+        httpReq.onreadystatechange = function () {
+            if (httpReq.readyState === 4 && httpReq.status === 200) {
+                        var data = JSON.parse(httpReq.responseText);
+                        that.renderRelated(data);
+            }
+        };
+
+        httpReq.send(fields);
+
 
 }
 Tracking.prototype.getRecomend = function() {
-    'use strict';
-    var that = this;
-    var skipvar = Math.floor(Math.random() * (10 - 0)) + 1;
-    var params = 'where={"category":"'+this.cat+'"}&limit=3';
-    var httpReq = new XMLHttpRequest();
-    var url = 'https://api.parse.com/1/classes/Noticias?'+params;
-    httpReq.open('GET', url, true);
-    httpReq.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
-    httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
-    httpReq.setRequestHeader('Content-Type', 'application/json');
+        'use strict';
+        var that = this;
+        var httpReq = new XMLHttpRequest();
+        var url = 'https://api.parse.com/1/functions/recomendNews';
+        var fields = JSON.stringify({category:this.cat,news:this.newid,user:this.cookie});
 
-    httpReq.onreadystatechange = function () {
-     if (httpReq.readyState === 4 && httpReq.status === 200) {
+        httpReq.open('POST', url, true);
 
-            var data = JSON.parse(httpReq.responseText);
-            that.renderRecomend(data);
-     }
-    };
+        httpReq.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
+        httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
+        httpReq.setRequestHeader('Content-Type', 'application/json');
 
-    httpReq.send();
+        httpReq.onreadystatechange = function () {
+            if (httpReq.readyState === 4 && httpReq.status === 200) {
+                        var data = JSON.parse(httpReq.responseText);
+                         that.renderRecomend(data);
+            }
+        };
+
+        httpReq.send(fields);
+
 
 }
+
 Tracking.prototype.getCat = function() {
     return this.cat
 }
@@ -465,12 +510,19 @@ if (window.location.pathname !== '/') {
         track.sendTrack();
         track.getRelated();
         track.getRecomend();
+        
         if (track.getCat() == "obituarios"){
             $(".rela").hide();
         }
         //console.log(track);
     }, 0);
 }
+if (window.location.pathname == '/') {
 
+    setTimeout(function() {
+        var track = new Tracking();
 
+        track.renderTopNews();
 
+    }, 0);
+}
