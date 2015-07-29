@@ -541,7 +541,10 @@ body > div.container > div:nth-child(2) > div.col-md-4.hidden-xs.hidden-sm > div
 .topnews:hover {
     opacity: 0.8;
 }
-
+.media:hover {
+     opacity: 0.8;
+     cursor:pointer;
+}
 
 /* Medium Devices, Desktops */
 
@@ -1115,7 +1118,10 @@ article > div > div > i.fa:hover {
     height: 100%;
     padding: 0 10% 0 10px;
     font-weight: 700;
-    border: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1;
     background: transparent;
     font-size: 40px;
     color: #336799;
