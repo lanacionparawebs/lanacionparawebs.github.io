@@ -524,5 +524,21 @@ if (window.location.pathname == '/') {
 
         track.renderTopNews();
 
+       
+
+
     }, 0);
+}
+
+
+var items = window.localStorage.getItem('welcome')
+
+if (items === undefined || items === null || items.length === 0)
+{
+   localStorage.welcome = false;
+}
+if ( localStorage.welcome == "false") {
+     localStorage.welcome = true;
+    $('#myModal').modal('show');
+
 }
