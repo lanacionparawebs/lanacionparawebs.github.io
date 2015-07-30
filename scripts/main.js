@@ -533,12 +533,16 @@ if (window.location.pathname == '/') {
 
 var items = window.localStorage.getItem('welcome')
 
-if (items === undefined || items === null || items.length === 0)
-{
-   localStorage.welcome = false;
+if (items === undefined || items === null || items.length === 0) {
+    localStorage.welcome = false;
 }
-if ( localStorage.welcome == "false") {
-     localStorage.welcome = true;
+if (localStorage.welcome == "false") {
+    localStorage.welcome = true;
     $('#myModal').modal('show');
 
 }
+
+
+$("#welcomeClose").click(function() {
+    $('#myModal').modal('hide');
+});
