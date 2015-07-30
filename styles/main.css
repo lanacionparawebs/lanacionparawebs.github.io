@@ -580,7 +580,7 @@ body > div.container > div:nth-child(2) > div.col-md-4.hidden-xs.hidden-sm > div
 
 .post .postHead > h3 {
     font-size: 20px;
-    margin-top: 5px;
+    margin-top: 0px;
     margin-bottom: 5px;
     color: #000;
     font-size: 14px;
@@ -637,6 +637,37 @@ body > div.container > div:nth-child(2) > div.col-md-4.hidden-xs.hidden-sm > div
     display: table-cell;
     vertical-align: bottom;
     text-transform: uppercase;
+}
+
+.socialshareMain {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px
+}
+
+.socialshareMain > a {
+    color: #000;
+    text-decoration: none;
+}
+
+.socialshareMain .fa-twitter:hover {
+    color: #55acee;
+}
+
+.socialshareMain .fa-facebook:hover {
+    color: #3b5998;
+}
+
+.socialshareMain .fa-google-plus:hover {
+    color: #dd4b39;
+}
+
+.socialshareMain .fa-whatsapp:hover {
+    color: #4dc247;
+}
+
+.socialshareMain .fa-envelope:hover {
+    color: #400191;
 }
 
 .post .post-category b {
