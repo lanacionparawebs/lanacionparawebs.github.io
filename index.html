@@ -1763,6 +1763,17 @@ Caracas (EFE).- La alianza opositora Mesa de la U.. </p>
 <script>
 $(document).ready(function() {
     $('#simple-menu').sidr();
+      $(window).touchwipe({
+        wipeLeft: function() {
+          
+          $.sidr('close', 'sidr-main');
+        },
+        wipeRight: function() {
+          
+          $.sidr('open', 'sidr-main');
+        },
+        preventDefaultEvents: false
+      });
 });
 </script>
 
