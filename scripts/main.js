@@ -11,25 +11,10 @@ $(document).ready(function() {
             },
             partials: {},
             subs: {}
-        }), templates.small = new Hogan.Template({
-            code: function(b, s, a) {
-                var e = this;
-                return e.b(a = a || ""), e.b('<div class="row"> '), e.b("\n" + a), e.b('<div class="col-md-12 col-lg-12 "> '), e.b("\n" + a), e.b('    <a href="'), e.b(e.v(e.f("slug", b, s, 0))), e.b('"><img class="img-responsive topnews" src="fotoedicion/thumb_'), e.b(e.v(e.f("featured", b, s, 0))), e.b('"></a> '), e.b("\n" + a), e.b('    <span class="categorysmall '), e.b(e.v(e.f("css", b, s, 0))), e.b('">'), e.b(e.v(e.f("category", b, s, 0))), e.b("</span> "), e.b("\n" + a), e.b('    <span class="newTitleSmall"> '), e.b("\n" + a), e.b('        <a href="'), e.b(e.v(e.f("slug", b, s, 0))), e.b('"><h3>'), e.b(e.v(e.f("title", b, s, 0))), e.b("</h3></a>"), e.b("\n" + a), e.b("    </span> "), e.b("\n" + a), e.b("</div> "), e.b("\n" + a), e.b("</div>"), e.fl()
-            },
-            partials: {},
-            subs: {}
         });
 
         $.getJSON("featured.json", function(data) {
-            if (type == true) {
-                $("#smallNews").html("");
-                for (var i = 1; i < data.length; i++) {
-                    var output = templates["small"].render(data[i]);
-                    $("#smallNews").append(output);
-                }
-            }
-
-
+            
             $("#news-slider").html("")
             var news = [];
             for (var i = 0; i < data.length; i++) {
@@ -185,7 +170,6 @@ $(document).ready(function() {
                 genFeatured(true);
                 if ( sessionStorage.addInsert == "false") {
                      sessionStorage.addInsert = true;
-                    console.log("insert Lab")
                     $(".postLine div:nth-child(5)").before('<div class="col-xs-12 col-sm-6 col-md-6"><img src="/images/Laboratorio_Alfa_2_Arte.gif" alt="" style="max-width: 310px;"></div>');
 
                 }
@@ -402,7 +386,6 @@ Tracking.prototype.renderTopNews = function() {
     setTimeout(function() {
         var url = 'http://lanacionweb.parseapp.com/top';
         $.getJSON(url, function(data) {
-            console.log(data);
             riot.mount('top', {
                 items: data
             })
@@ -546,4 +529,7 @@ if (localStorage.welcome == "false") {
 
 $("#welcomeClose").click(function() {
     $('#myModal').modal('hide');
+});
+$(document).ready(function() {
+ // $('#simple_menu').sidr();
 });
