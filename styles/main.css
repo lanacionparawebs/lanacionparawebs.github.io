@@ -670,6 +670,12 @@ body > div.container > div:nth-child(2) > div.col-md-4.hidden-xs.hidden-sm > div
     color: #400191;
 }
 
+.socialshareMain .fa-instagram:hover {
+    color: #6095c4;
+}
+.socialshareMain .fa-rss:hover {
+    color: orange;
+}
 .post .post-category b {
     font-family: 'Open Sans', sans-serif;
     display: inline-block;
@@ -1279,3 +1285,5 @@ input[type="search"] {
     border-top: solid 3px #CCCCCC;
     z-index: -1;
 }
+
+

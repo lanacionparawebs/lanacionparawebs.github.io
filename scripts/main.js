@@ -145,7 +145,8 @@ $(document).ready(function() {
         <script>  \
         (adsbygoogle = window.adsbygoogle || []).push({});  \
         </script>';
-        $(data['Spot']).html(adsense);
+        var test= {"250":'<img src="/images/250.jpg" alt="">',"600":'<img src="/images/300x600.jpg" alt="">'};
+        $(data['Spot']).html(test[data['alto']]);
     }
 
     function loadPlate() {
@@ -192,9 +193,9 @@ $(document).ready(function() {
             }
             lazyLoad('.postimgl');
 
-            //adSpot({"Spot": ".side2501","ancho": '300',"alto": '250'});
-            //adSpot({"Spot": ".side2502","ancho": '300',"alto": '250'});
-            //adSpot({"Spot": ".side2503","ancho": '300', "alto": '600' });
+            adSpot({"Spot": ".side2501","ancho": '300',"alto": '250'});
+            adSpot({"Spot": ".side2502","ancho": '300',"alto": '250'});
+            adSpot({"Spot": ".side2503","ancho": '300', "alto": '600' });
             facebookSidebar();
             twitterSidebar();
             loadPlate();
