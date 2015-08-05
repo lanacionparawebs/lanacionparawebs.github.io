@@ -170,8 +170,7 @@ $(document).ready(function() {
                 genFeatured(true);
                 if ( sessionStorage.addInsert == "false") {
                      sessionStorage.addInsert = true;
-                    //$(".postLine div:nth-child(5)").before('<div class="col-xs-12 col-sm-6 col-md-6"><img src="/images/Laboratorio_Alfa_2_Arte.gif" alt="" style="max-width: 310px;"></div>');
-
+                    $("body > div:nth-child(6) > div.row.topshadow > div.col-md-8 > div.row.postLine > div:nth-child(5)").before('<div class="col-sm-6 col-md-6"><img src="/images/Laboratorio_Alfa_2_Arte.gif" alt="" style="max-width: 310px;"></div>');
                 }
 
             }
