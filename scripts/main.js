@@ -526,10 +526,12 @@ if (localStorage.welcome == "false") {
 
 }
 
-
 $("#welcomeClose").click(function() {
     $('#myModal').modal('hide');
 });
 $(document).ready(function() {
- // $('#simple_menu').sidr();
+    $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
 });
