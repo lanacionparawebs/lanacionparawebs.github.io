@@ -8647,7 +8647,7 @@ input[type="checkbox"] {
 
     .fullscreen .modal-body a {
         color: #333;
-        font-size: 300%;
+        font-size: 100%;
     }
 
     @media (max-width: 480px){

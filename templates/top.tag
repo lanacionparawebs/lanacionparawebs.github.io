@@ -2,7 +2,7 @@
 <div each={ items } class="media" style="color:#336799; margin-top:20px">
     <div class="media-left">
         <a href="#">
-            <img class="media-object" src="fotoedicion/thumb_{image}" style="width: 74px; height: 64px;">
+            <img class="media-object" src="/fotoedicion/thumb_{image}" style="width: 74px; height: 64px;">
         </a>
     </div>
     <div class="media-body">

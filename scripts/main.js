@@ -15,7 +15,7 @@ $(document).ready(function() {
 
         $.getJSON("featured.json", function(data) {
             
-            $("#news-slider").html("")
+            //$("#news-slider").html("")
             var news = [];
             for (var i = 0; i < data.length; i++) {
                 var output = templates["big"].render(data[i]);
@@ -150,19 +150,19 @@ $(document).ready(function() {
             doIn: function() {
                 $(this).animate({
                     top: 0,
-                    opacity: 1
+                    opacity: postContainer
                 }, 500);
             },
             tolerance: 50
         });
     }
+function postResize() {
+    height = $(".postContainer").height() > 400 ? $(".postContainer").height() : 400;
+    width = $(".postContainer").width() > 600 ? $(".postContainer").width() : 600;
+    $(".postPic").height(Math.round((height * 0.0775) + height)).width(Math.round((width * 0.0775) + width));
+     $('.postPic').fadeIn( 100 ).css('visibility', 'visible');;
+}
 
-    function postResize() {
-        height = $(".postContainer").height(); //$('.bigTitleImg:first').height();
-        width = $(".postContainer").width(); //$('.bigTitleImg:first').width();
-        $(".postPic").height(Math.round((height * 0.0775) + height)).width(Math.round((width * 0.0775) + width));
-
-    }
     function loader() {
     Response.action(function() {
         if (Response.band(992)) {
@@ -274,9 +274,17 @@ $(document).ready(function(e) {
          $('#menuModal').modal('show');
     });
 $('#menuModal').on('show.bs.modal', function (e) {
-            //      $('.lastadv').css('position', 'static');
+           console.log("abrio")
 
 })
+$('#menuModal').on('hide.bs.modal', function (e) {
+           console.log("se cerro")
+           $("#searchTerm").val("");
+           $("#topsearchs").show();
+           $("#resultados").hide();
+
+})
+
 
 
 /////////////////// Tracking /////////
@@ -314,10 +322,10 @@ Tracking.prototype.cookieSeter = function() {
 Tracking.prototype.setCookie = function(val) {
     document.cookie = this.cookieName + "=" + val + "; expires=Fri, 31 Dec 9999 23:59:59 GMT;"
     if (Modernizr.localstorage) {
-    sessionStorage.setItem(this.cookieName , val);
-    localStorage.setItem(this.cookieName , val);
-    } 
-    
+        sessionStorage.setItem(this.cookieName, val);
+        localStorage.setItem(this.cookieName, val);
+    }
+
 
 }
 
@@ -328,7 +336,11 @@ Tracking.prototype.sendTrack = function() {
 
     var httpReq = new XMLHttpRequest();
     var url = 'https://api.parse.com/1/classes/CurrentNews';
-    var fields = JSON.stringify({user:this.cookie,cat:this.cat,newId:this.newid});
+    var fields = JSON.stringify({
+        user: this.cookie,
+        cat: this.cat,
+        newId: this.newid
+    });
 
     httpReq.open('POST', url, true);
 
@@ -336,7 +348,7 @@ Tracking.prototype.sendTrack = function() {
     httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
     httpReq.setRequestHeader('Content-Type', 'application/json');
 
-    httpReq.onreadystatechange = function () {
+    httpReq.onreadystatechange = function() {
         if (httpReq.readyState === 4 && httpReq.status === 'success') {
             //alert(httpReq.responseText);
         }
@@ -349,7 +361,9 @@ Tracking.prototype.sendTrack = function() {
 
     var httpReq = new XMLHttpRequest();
     var url = 'https://api.parse.com/1/functions/mostRead';
-    var fields = JSON.stringify({news:this.newid});
+    var fields = JSON.stringify({
+        news: this.newid
+    });
 
     httpReq.open('POST', url, true);
 
@@ -357,7 +371,7 @@ Tracking.prototype.sendTrack = function() {
     httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
     httpReq.setRequestHeader('Content-Type', 'application/json');
 
-    httpReq.onreadystatechange = function () {
+    httpReq.onreadystatechange = function() {
         if (httpReq.readyState === 4 && httpReq.status === 'success') {
             //alert(httpReq.responseText);
         }
@@ -410,50 +424,57 @@ Tracking.prototype.renderRelated = function(data) {
 
 
 Tracking.prototype.getRelated = function() {
-        'use strict';
-        var that = this;
-        var httpReq = new XMLHttpRequest();
-        var url = 'https://api.parse.com/1/functions/relatedNews';
-        var fields = JSON.stringify({category:this.cat,news:this.newid});
+    'use strict';
+    var that = this;
+    var httpReq = new XMLHttpRequest();
+    var url = 'https://api.parse.com/1/functions/relatedNews';
+    var fields = JSON.stringify({
+        category: this.cat,
+        news: this.newid
+    });
 
-        httpReq.open('POST', url, true);
+    httpReq.open('POST', url, true);
 
-        httpReq.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
-        httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
-        httpReq.setRequestHeader('Content-Type', 'application/json');
+    httpReq.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
+    httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
+    httpReq.setRequestHeader('Content-Type', 'application/json');
 
-        httpReq.onreadystatechange = function () {
-            if (httpReq.readyState === 4 && httpReq.status === 200) {
-                        var data = JSON.parse(httpReq.responseText);
-                        that.renderRelated(data);
-            }
-        };
+    httpReq.onreadystatechange = function() {
+        if (httpReq.readyState === 4 && httpReq.status === 200) {
+            var data = JSON.parse(httpReq.responseText);
+            that.renderRelated(data);
+        }
+    };
 
-        httpReq.send(fields);
+    httpReq.send(fields);
 
 
 }
 Tracking.prototype.getRecomend = function() {
-        'use strict';
-        var that = this;
-        var httpReq = new XMLHttpRequest();
-        var url = 'https://api.parse.com/1/functions/recomendNews';
-        var fields = JSON.stringify({category:this.cat,news:this.newid,user:this.cookie});
+    'use strict';
+    var that = this;
+    var httpReq = new XMLHttpRequest();
+    var url = 'https://api.parse.com/1/functions/recomendNews';
+    var fields = JSON.stringify({
+        category: this.cat,
+        news: this.newid,
+        user: this.cookie
+    });
 
-        httpReq.open('POST', url, true);
+    httpReq.open('POST', url, true);
 
-        httpReq.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
-        httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
-        httpReq.setRequestHeader('Content-Type', 'application/json');
+    httpReq.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
+    httpReq.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
+    httpReq.setRequestHeader('Content-Type', 'application/json');
 
-        httpReq.onreadystatechange = function () {
-            if (httpReq.readyState === 4 && httpReq.status === 200) {
-                        var data = JSON.parse(httpReq.responseText);
-                         that.renderRecomend(data);
-            }
-        };
+    httpReq.onreadystatechange = function() {
+        if (httpReq.readyState === 4 && httpReq.status === 200) {
+            var data = JSON.parse(httpReq.responseText);
+            that.renderRecomend(data);
+        }
+    };
 
-        httpReq.send(fields);
+    httpReq.send(fields);
 
 
 }
@@ -464,10 +485,10 @@ Tracking.prototype.getCat = function() {
 Tracking.prototype.getCookie = function() {
     var name = this.cookieName + "=";
     var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
+    for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1);
-        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+        while (c.charAt(0) == ' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
     }
     return null;
 }
@@ -500,7 +521,7 @@ if (window.location.pathname !== '/') {
         //console.log(track);
     }, 0);
 }
-if (window.location.pathname == '/') {
+if (window.location.pathname) {
 
     setTimeout(function() {
         var track = new Tracking();
@@ -512,7 +533,6 @@ if (window.location.pathname == '/') {
 
     }, 0);
 }
-
 
 var items = window.localStorage.getItem('welcome')
 
@@ -533,4 +553,48 @@ $(document).ready(function() {
         event.preventDefault();
         $(this).ekkoLightbox();
     });
+});
+
+////// Search Engine ////////////
+$(document).ready(function($) {
+    var renderSearch = function(data) {
+    var items = [];
+    for (var i = 0; i < data['results'].length; i++) {
+
+        items.push(data['results'][i]);
+    }
+    console.log(items)
+    riot.mount('results', {
+        title: 'LA NACION RECOMIENDA..',
+        items: items
+    })
+
+
+}
+    var endPoint = "https://api.parse.com/1/classes/Noticias?"
+    $("#tosearch").on("click", function(event) {
+        $("#searchwait").show();
+        var terms = $("#searchTerm").val().toLowerCase().trim().split(" ");
+        var stopWords = ["a", "actualmente", "acuerdo", "adelante", "ademas", "además", "adrede", "afirmó", "agregó", "ahi", "ahora", "ahí", "al", "algo", "alguna", "algunas", "alguno", "algunos", "algún", "alli", "allí", "alrededor", "ambos", "ampleamos", "antano", "antaño", "ante", "anterior", "antes", "apenas", "aproximadamente", "aquel", "aquella", "aquellas", "aquello", "aquellos", "aqui", "aquél", "aquélla", "aquéllas", "aquéllos", "aquí", "arriba", "arribaabajo", "aseguró", "asi", "así", "atras", "aun", "aunque", "ayer", "añadió", "aún", "b", "bajo", "bastante", "bien", "breve", "buen", "buena", "buenas", "bueno", "buenos", "c", "cada", "casi", "cerca", "cierta", "ciertas", "cierto", "ciertos", "cinco", "claro", "comentó", "como", "con", "conmigo", "conocer", "conseguimos", "conseguir", "considera", "consideró", "consigo", "consigue", "consiguen", "consigues", "contigo", "contra", "cosas", "creo", "cual", "cuales", "cualquier", "cuando", "cuanta", "cuantas", "cuanto", "cuantos", "cuatro", "cuenta", "cuál", "cuáles", "cuándo", "cuánta", "cuántas", "cuánto", "cuántos", "cómo", "d", "da", "dado", "dan", "dar", "de", "debajo", "debe", "deben", "debido", "decir", "dejó", "del", "delante", "demasiado", "demás", "dentro", "deprisa", "desde", "despacio", "despues", "después", "detras", "detrás", "dia", "dias", "dice", "dicen", "dicho", "dieron", "diferente", "diferentes", "dijeron", "dijo", "dio", "donde", "dos", "durante", "día", "días", "dónde", "e", "ejemplo", "el", "ella", "ellas", "ello", "ellos", "embargo", "empleais", "emplean", "emplear", "empleas", "empleo", "en", "encima", "encuentra", "enfrente", "enseguida", "entonces", "entre", "era", "eramos", "eran", "eras", "eres", "es", "esa", "esas", "ese", "eso", "esos", "esta", "estaba", "estaban", "estado", "estados", "estais", "estamos", "estan", "estar", "estará", "estas", "este", "esto", "estos", "estoy", "estuvo", "está", "están", "ex", "excepto", "existe", "existen", "explicó", "expresó", "f", "fin", "final", "fue", "fuera", "fueron", "fui", "fuimos", "g", "general", "gran", "grandes", "gueno", "h", "ha", "haber", "habia", "habla", "hablan", "habrá", "había", "habían", "hace", "haceis", "hacemos", "hacen", "hacer", "hacerlo", "haces", "hacia", "haciendo", "hago", "han", "hasta", "hay", "haya", "he", "hecho", "hemos", "hicieron", "hizo", "horas", "hoy", "hubo", "i", "igual", "incluso", "indicó", "informo", "informó", "intenta", "intentais", "intentamos", "intentan", "intentar", "intentas", "intento", "ir", "j", "junto", "k", "l", "la", "lado", "largo", "las", "le", "lejos", "les", "llegó", "lleva", "llevar", "lo", "los", "luego", "lugar", "m", "mal", "manera", "manifestó", "mas", "mayor", "me", "mediante", "medio", "mejor", "mencionó", "menos", "menudo", "mi", "mia", "mias", "mientras", "mio", "mios", "mis", "misma", "mismas", "mismo", "mismos", "modo", "momento", "mucha", "muchas", "mucho", "muchos", "muy", "más", "mí", "mía", "mías", "mío", "míos", "n", "nada", "nadie", "ni", "ninguna", "ningunas", "ninguno", "ningunos", "ningún", "no", "nos", "nosotras", "nosotros", "nuestra", "nuestras", "nuestro", "nuestros", "nueva", "nuevas", "nuevo", "nuevos", "nunca", "o", "ocho", "os", "otra", "otras", "otro", "otros", "p", "pais", "para", "parece", "parte", "partir", "pasada", "pasado", "paìs", "peor", "pero", "pesar", "poca", "pocas", "poco", "pocos", "podeis", "podemos", "poder", "podria", "podriais", "podriamos", "podrian", "podrias", "podrá", "podrán", "podría", "podrían", "poner", "por", "porque", "posible", "primer", "primera", "primero", "primeros", "principalmente", "pronto", "propia", "propias", "propio", "propios", "proximo", "próximo", "próximos", "pudo", "pueda", "puede", "pueden", "puedo", "pues", "q", "qeu", "que", "quedó", "queremos", "quien", "quienes", "quiere", "quiza", "quizas", "quizá", "quizás", "quién", "quiénes", "qué", "r", "raras", "realizado", "realizar", "realizó", "repente", "respecto", "s", "sabe", "sabeis", "sabemos", "saben", "saber", "sabes", "salvo", "se", "sea", "sean", "segun", "segunda", "segundo", "según", "seis", "ser", "sera", "será", "serán", "sería", "señaló", "si", "sido", "siempre", "siendo", "siete", "sigue", "siguiente", "sin", "sino", "sobre", "sois", "sola", "solamente", "solas", "solo", "solos", "somos", "son", "soy", "soyos", "su", "supuesto", "sus", "suya", "suyas", "suyo", "sé", "sí", "sólo", "t", "tal", "tambien", "también", "tampoco", "tan", "tanto", "tarde", "te", "temprano", "tendrá", "tendrán", "teneis", "tenemos", "tener", "tenga", "tengo", "tenido", "tenía", "tercera", "ti", "tiempo", "tiene", "tienen", "toda", "todas", "todavia", "todavía", "todo", "todos", "total", "trabaja", "trabajais", "trabajamos", "trabajan", "trabajar", "trabajas", "trabajo", "tras", "trata", "través", "tres", "tu", "tus", "tuvo", "tuya", "tuyas", "tuyo", "tuyos", "tú", "u", "ultimo", "un", "una", "unas", "uno", "unos", "usa", "usais", "usamos", "usan", "usar", "usas", "uso", "usted", "ustedes", "v", "va", "vais", "valor", "vamos", "van", "varias", "varios", "vaya", "veces", "ver", "verdad", "verdadera", "verdadero", "vez", "vosotras", "vosotros", "voy", "vuestra", "vuestras", "vuestro", "vuestros", "w", "x", "y", "ya", "yo", "z", "él", "ésa", "ésas", "ése", "ésos", "ésta", "éstas", "éste", "éstos", "última", "últimas", "último", "últimos"];
+        words = _.filter(terms, function(w) {
+            return (w.length > 1) && !_.contains(stopWords, w);
+        });
+        console.log(words);
+        var search = encodeURIComponent('where={"words":{"$all":' + JSON.stringify(words) + '}}');
+        $.ajax({
+            beforeSend: function(request) {
+                request.setRequestHeader('X-Parse-Application-Id', 'mxPOm008hyVfunzWFCKB98kEiMHnwkFrMNiOoS4n');
+                request.setRequestHeader('X-Parse-REST-API-Key', 'uJLctPaJxsFXWTUEUz3ia2Bi6wWaUvGnCjTns59N');
+                request.setRequestHeader('Content-Type', 'application/json');
+            },
+            dataType: "json",
+            url: endPoint + search,
+            success: function(data) {
+                console.log(data);
+                renderSearch(data);
+
+            }
+        });
+    });
+
 });
