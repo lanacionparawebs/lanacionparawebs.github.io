@@ -150,7 +150,7 @@ $(document).ready(function() {
             doIn: function() {
                 $(this).animate({
                     top: 0,
-                    opacity: postContainer
+                    opacity: "postContainer"
                 }, 500);
             },
             tolerance: 50
