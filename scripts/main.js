@@ -601,6 +601,14 @@ $(document).ready(function($) {
 
 
 }
+$('#searchTerm').on('keyup keypress', function(e) {
+  var code = e.keyCode || e.which;
+  if (code == 13) {
+  $("#tosearch").click(); 
+    e.preventDefault();
+    return false;
+  }
+});
     var endPoint = "https://api.parse.com/1/classes/Noticias?"
     $("#tosearch").on("click", function(event) {
         $("#searchwait").show();
