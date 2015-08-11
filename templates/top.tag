@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-3 col-md-offset-8 readsCount">+{reads}</div>
         </div>
-        <a href="/{slug}" style="text-decoration:none;"><p class="topTitle">{ title.substr(0, 50); }</p></a>
+        <a href="/{slug}" style="text-decoration:none;text-align: left !important;"><p class="topTitle">{ title.substr(0, 50); }</p></a>
     </div>
 </div>
   <script>
