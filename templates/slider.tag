@@ -11,14 +11,11 @@
         width = 600 //$('.bigTitleImg:first').width();
         $(".bigTitleSli").width(width);
         $('.bigTitleImg').height(Math.round((height * 0.0575) + height)).width(Math.round((width * 0.0175) + width))
-        console.log($('.newTitle').width());
-        console.log($('.bigTitleImg').width());
 
         $('.newTitle').width(Math.round(($('.bigTitleImg').width() - 22)));
 
         var image = $("#mainFeaturedUrl");
         image.fadeOut('slow', function () {
-        console.log("animate");
         image.fadeIn('slow');
     });
  })

@@ -47,12 +47,14 @@ $(document).ready(function() {
   }
 function genFeatured(type) {
     $.getJSON("featured.json", function(data) {
+        _.forEach(data, function(n, key) {
+            var img = new Image();
+            img.src = '/fotoedicion/thumb_'+n['featured'];
+        });
         height = 400 //$('.bigTitleImg:first').height();
         width = 600 //$('.bigTitleImg:first').width();
         $(".bigTitleSli").width(width);
         $('.bigTitleImg').height(Math.round((height * 0.0575) + height)).width(Math.round((width * 0.0175) + width))
-        console.log($('.newTitle').width());
-        console.log($('.bigTitleImg').width());
         $(".newTitle").show();
         $('.newTitle').width(Math.round(($('.bigTitleImg').width() - 22)));
         var i = 0
@@ -67,6 +69,7 @@ function genFeatured(type) {
         $(".adsLarge").show();
     });
 }
+
 
 
     function facebookSidebar() {
