@@ -546,7 +546,7 @@ $(document).ready(function() {
 
 $("time").each(function() { 
   
-  var human = Date.create($(this).attr("datetime")).relative(locale='es')
+  var human = Date.create($(this).attr("datetime")).rewind({ hours: -4 }).relative(locale='es')
   $(this).text(human);
 });
 ////// Search Engine ////////////
