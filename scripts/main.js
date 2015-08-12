@@ -222,6 +222,8 @@ function postResize() {
             if (window.location.pathname === '/') {
                 genFeatured(false);
                 animatePosts();
+                lazyLoad('.postimgl');
+
             }
         } else {
             console.log("xs")
