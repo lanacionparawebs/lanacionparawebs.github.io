@@ -55,7 +55,7 @@ function genFeatured(type) {
 
 
             var tweetslider = {
-                "id": '589861836763299840',
+                "id": '472360547652861952',
                 "domId": '',
                 "maxTweets": 10,
                 "enableLinks": true,
