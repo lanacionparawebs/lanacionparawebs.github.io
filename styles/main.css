@@ -483,7 +483,7 @@ body > div.container > div:nth-child(2) > div.col-md-4.hidden-xs.hidden-sm > div
         background-color: #813250;
     }
     .spolitica {
-        color: #fff;
+        color: #fff !important;
         background-color: #333;
     }
     .ssalud {
@@ -491,56 +491,55 @@ body > div.container > div:nth-child(2) > div.col-md-4.hidden-xs.hidden-sm > div
         background-color: #2C85EA;
     }
     .stecnologia {
-        color: #fff;
+        color: #fff !important;
         background-color: #FF9B00;
     }
     .sregional {
-        color: #fff;
+        color: #fff !important;
         background-color: #8aa824;
     }
     .scultura {
-        color: #fff;
+        color: #fff !important;
         background-color: #800824;
     }
     .sinfogen {
-        color: #fff;
+        color: #fff !important;
         background-color: #65019a;
     }
     .snacional {
-        color: #fff;
+        color: #fff !important;
         background-color: #b16f0a;
-        padding: 2px;
     }
     .sinternacional {
-        color: #fff;
+        color: #fff !important;
         background-color: #029aca;
     }
     .sopinion {
-        color: #fff;
+        color: #fff !important;
         background-color: #999;
     }
     .sdeportes {
-        color: #fff;
+        color: #fff !important;
         background-color: #d7ac00;
     }
     .ssucesos {
-        color: #fff;
+        color: #fff !important;
         background-color: #6f0000;
     }
     .smas {
-        color: #fff;
+        color: #fff !important;
         background-color: #000;
     }
     .sreportajesyespeciales {
-        color: #fff;
+        color: #fff !important;
         background-color: #a308ba;
     }
     .scosasdelmundo {
-        color: #fff;
+        color: #fff !important;
         background-color: #4f9a71;
     }
     .sfarandulayespectaculos {
-        color: #fff;
+        color: #fff !important;
         background-color: #E822A2;
     }
 

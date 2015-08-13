@@ -143,8 +143,9 @@ function postResize(doit) {
     if (doit == true) {
         height = $(".postContainer").height() > 400 ? $(".postContainer").height() : 400;
         width = $(".postContainer").width() > 600 ? $(".postContainer").width() : 600;
+        $(".postPic").height(Math.round((height * 0.0775) + height)).width(Math.round((width * 0.0775) + width));
+
     }
-    // $(".postPic").height(Math.round((height * 0.0775) + height)).width(Math.round((width * 0.0775) + width));
     $('.postPic').fadeIn(100).css('visibility', 'visible');;
 }
 
