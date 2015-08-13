@@ -551,11 +551,16 @@ $(document).ready(function() {
 });
 ////// Humanize Time ////////////
 
-$("time").each(function() { 
-  
-  var human = Date.create($(this).attr("datetime")).rewind({ hours: -4 }).relative(locale='es')
-  $(this).text(human);
+$("time").each(function() {
+    if (Date.create($(this).attr("datetime")).daysAgo() < 2) {
+        var human = Date.create($(this).attr("datetime")).rewind({
+            hours: -4
+        }).relative(locale = 'es')
+        $(this).text(human);
+    }
+
 });
+
 ////// Search Engine ////////////
 $(document).ready(function($) {
     var renderSearch = function(data) {
