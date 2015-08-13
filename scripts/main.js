@@ -157,6 +157,7 @@ function postResize(doit) {
                      sessionStorage.addInsert = true;
                     $("body > div:nth-child(6) > div.row.topshadow > div.col-md-8 > div.row.postLine > div:nth-child(5)").before('<div class="col-sm-6 col-md-6"><img src="/images/Laboratorio_Alfa_2_Arte.gif" alt="" style="max-width: 310px;"></div>');
                 }
+                        twitterSidebar();
 
             }
             lazyLoad('.postimgl');
@@ -165,7 +166,6 @@ function postResize(doit) {
             adSpot({"Spot": ".side2502","ancho": '300',"alto": '250'});
             adSpot({"Spot": ".side2503","ancho": '300', "alto": '600' });
             facebookSidebar();
-            twitterSidebar();
             loadPlate();
             animatePosts();
             postResize(true);
